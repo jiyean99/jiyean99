@@ -22,7 +22,6 @@
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">Contact me </h2> <br> 
   <div style="font-weight: 700; font-size: 15px; text-align: left; color: #282d33;">
       <ul>
-          <li><a href="mailto:wldus0191@naver.com">🔗 [Mail]</a></li>
           <li><a href="https://open.kakao.com/o/s081A11h">🔗 [KakaoTalk]</a></li>
             <li><a href="https://velog.io/@jiyean99/posts">🔗 [Velog]</a></li>
     </ul>
