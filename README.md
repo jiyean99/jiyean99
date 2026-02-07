@@ -30,14 +30,13 @@
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">BaekJoon Problem Solving & Language Stats</h2>
     <div style="text-align: left;">
          <img src="http://mazandi.herokuapp.com/api?handle=wldus0191&theme=warm"/>
-        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=jiyean99&layout=compact&bg_color=180,00000000,&title_color=000000&text_color=000000" /><br/>
         <img src="https://github-readme-stats-delta-nine-40.vercel.app/api/top-langs/?username=jiyean99&layout=compact" />
     </div>
-    <br>
+    <!-- <br>
     <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">Velog Dashboard</h2>
     <div style="text-align: left;">
         <a href="https://velog.io/@jiyean99">
           <img src="https://velog-dashboard.kro.kr/badge?username=jiyean99&type=default&assets=views,likes,posts"/>
         </a>
-    </div>
+    </div> -->
 </div>
