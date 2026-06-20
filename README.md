@@ -1,42 +1,56 @@
-<!-- <div align="center">
-    <img src="https://capsule-render.vercel.app/api?type=transparent&color=gradient&height=120&text=Eazy's%20Github&animation=fadeIn&fontColor=000000&fontSize=40" />
-</div> -->
-<div style="text-align: left;"> 
-    <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">안녕하세요 꽃을 피울 준비가 된 웹개발자 이지연입니다.</h2>  
-    <div style="font-weight: 700; font-size: 15px; text-align: left; color: #282d33;"> 
-        <ul>
-            <li>매사에 책임감을 가지고 성실히 임하겠습니다.</li>
-            <li>늘 겸손한 자세로 배우고 성장하는 모습을 보이겠습니다.</li>
-            <li>밝고 긍정적인 성격으로 원만한 협력과 소통을 이끌어가겠습니다.</li>
-            <li>자전거 타기를 즐기며 꾸준함과 도전 정신을 기르고 있습니다. 🚵‍♂️</li> 
-        </ul>
-    </div>
-    <br>
-    <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">Tech Stacks</h2> 
-    <div style="text-align: left;"> 
-        <img src="https://skillicons.dev/icons?i=java,spring,nodejs,nestjs,mysql,redis,docker,kubernetes,github">
-        <br/>
-        <img src="https://skillicons.dev/icons?i=react,vue,js,ts,html,css,sass,emotion,styledcomponents" />
-    </div>
-    <br>
-    <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">Contact me</h2> 
-    <div style="font-weight: 700; font-size: 15px; text-align: left; color: #282d33;">
-        <ul>
-            <li><a href="https://open.kakao.com/o/s081A11h">🔗 [KakaoTalk]</a></li>
-            <li><a href="https://velog.io/@jiyean99/posts">🔗 [Velog]</a></li>
-        </ul>
-    </div>  
-    <br>
-    <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">BaekJoon Problem Solving & Language Stats</h2>
-    <div style="text-align: left;">
-         <img src="http://mazandi.herokuapp.com/api?handle=wldus0191&theme=warm"/>
-        <img src="https://github-readme-stats-delta-nine-40.vercel.app/api/top-langs/?username=jiyean99&layout=compact" />
-    </div>
-    <!-- <br>
-    <h2 style="border-bottom: 1px solid #d8dee4; color: #282d33;">Velog Dashboard</h2>
-    <div style="text-align: left;">
-        <a href="https://velog.io/@jiyean99">
-          <img src="https://velog-dashboard.kro.kr/badge?username=jiyean99&type=default&assets=views,likes,posts"/>
-        </a>
-    </div> -->
+<div align="left">
+
+# 이지연 · Jiyeon Lee
+
+**Full-stack Engineer**
+
+[Velog](https://velog.io/@jiyean99/posts) &nbsp;·&nbsp; [KakaoTalk](https://open.kakao.com/o/s081A11h)
+
+</div>
+
+> 책임감 있게 임하고 겸손하게 배우며, 원만한 소통을 지향합니다.<br/>
+> 실시간·대규모 트래픽 서비스, MSA·클라우드 네이티브 인프라, LLM 기반 서비스 개발에 관심이 많습니다.
+
+<br/>
+
+## Tech Stack
+
+**Language &amp; Backend** &nbsp; <br/><img src="https://skillicons.dev/icons?i=java,python,ts,js,spring,nodejs,nestjs,fastapi,graphql" height="40" /><br/>
+**Database &amp; Messaging** &nbsp; <br/><img src="https://skillicons.dev/icons?i=mysql,postgres,mongodb,redis,elasticsearch,kafka" height="40" /><br/>
+**Infra &amp; DevOps** &nbsp; <br/><img src="https://skillicons.dev/icons?i=docker,kubernetes,aws,terraform,nginx,githubactions,grafana" height="40" /><br/>
+**Frontend &amp; Tools** &nbsp; <br/><img src="https://skillicons.dev/icons?i=react,nextjs,vue,tailwind,sass,redux,vite,git,github,postman,figma,notion" height="40" />
+
+<br/>
+
+## Experience
+
+<img align="absmiddle" src="https://github.com/user-attachments/assets/4bbaa6d3-8930-4a92-bc6d-113ade64dfe2" height="20" alt="AIgement" /> **[(주)에이아이지먼트](https://aigement.com)** · Full-stack Engineer &nbsp; <sub>2026.06 – 현재</sub>
+
+- **PLYN**([`바로가기 ↗`](https://plynai.com)) - 구매업무 자동화 서비스 · LLM API 연동 및 공급망(Supply Chain) 도메인 API 설계·구현 (``Python`` · ``FastAPI`` · ``PostgreSQL``)
+
+<br/>
+
+<img align="absmiddle" src="https://www.google.com/s2/favicons?domain=zempublic.co.kr&sz=64" width="18" /> **[(주)잼퍼블릭](https://zempublic.co.kr)** · Frontend Engineer &nbsp; <sub>2023.03 – 2025.08 | 2년 5개월</sub>
+
+- **승부사 온라인**([`바로가기 ↗`](https://plynai.com)) - ``React`` 기반 실시간 스포츠 웹 베팅 게임 서비스 프론트엔드 운영
+- **사내 매출 대시보드**([`바로가기 ↗`](https://plynai.com)) - ``Vue`` 기반 운영 대시보드 프론트엔드 설계·운영
+- **챔프포커**([`바로가기 ↗`](https://plynai.com)) - ``Unity`` 웹보드 게임 웹뷰 프론트엔드 개발
+
+<br/>
+
+## Side Projects
+
+| 프로젝트 | 설명 | 주요 역할 | 기술 |
+|:--|:--|:--|:--|
+| **[Workforce](https://github.com/beyond-sw-camp/be23-fin-4team-workforce-be-devops)** | AI 챗봇·이벤트 기반 자동화로 근태·급여·결재·평가까지 통합한 MSA 기반 HRMS | 목표·평가(OKR) 도메인 End-to-End, 실시간 Member 채팅(WebSocket·Redis fan-out), K8s 무중단 배포·AWS EKS 인프라 구성 | `Spring Boot` `Kafka` `WebSocket/STOMP` `Redis` `Kubernetes` `AWS EKS` |
+| **[Articket](https://github.com/beyond-sw-camp/be23-2nd-team5-articket-be)** | 실시간 좌석 선점·결제로 예매를 확정하는 공연 예매 플랫폼 | 팀리드(PM), 인증/인가 설계(JWT·소셜 OAuth2), SSE·Redis Pub/Sub 실시간 알림, FE 아키텍처, PortOne·KakaoMap 연동 | `Spring Boot` `JWT · OAuth2` `Redis` `SSE` `PortOne` `AWS` |
+
+<br/>
+
+## Contributions
+
+<div align="center">
+
+<img src="https://ghchart.rshah.org/jiyean99" alt="Jiyeon Lee's GitHub contribution graph" width="90%" />
+
 </div>
