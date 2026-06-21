@@ -32,9 +32,9 @@
 
 <img align="absmiddle" src="https://www.google.com/s2/favicons?domain=zempublic.co.kr&sz=64" width="18" /> **[(주)잼퍼블릭](https://zempublic.co.kr)** · Frontend Engineer &nbsp; <sub>2023.03 – 2025.08 | 2년 5개월</sub>
 
-- **승부사 온라인**([`바로가기 ↗`](https://plynai.com)) - ``React`` 기반 실시간 스포츠 웹 베팅 게임 서비스 프론트엔드 운영
-- **사내 매출 대시보드**([`바로가기 ↗`](https://plynai.com)) - ``Vue`` 기반 운영 대시보드 프론트엔드 설계·운영
-- **챔프포커**([`바로가기 ↗`](https://plynai.com)) - ``Unity`` 웹보드 게임 웹뷰 프론트엔드 개발
+- **승부사 온라인**([`바로가기 ↗`](https://www.adventurer.co.kr/)) - ``React`` 기반 실시간 스포츠 웹 베팅 게임 서비스 프론트엔드 운영
+- **사내 매출 대시보드**([`바로가기 ↗`](https://404)) - ``Vue`` 기반 운영 대시보드 프론트엔드 설계·운영
+- **챔프포커**([`바로가기 ↗`](https://champpoker.co.kr/)) - ``Unity`` 웹보드 게임 웹뷰 프론트엔드 개발
 
 <br/>
 
