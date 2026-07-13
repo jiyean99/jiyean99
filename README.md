@@ -50,7 +50,7 @@
 ## Contributions
 
 <div align="center">
-
-<img src="https://ghchart.rshah.org/jiyean99" alt="Jiyeon Lee's GitHub contribution graph" width="90%" />
+  
+![](./profile-3d-contrib/profile-green-animate.svg)
 
 </div>
