@@ -27,6 +27,7 @@
 <img align="absmiddle" src="https://github.com/user-attachments/assets/4bbaa6d3-8930-4a92-bc6d-113ade64dfe2" height="20" alt="AIgement" /> **[(주)에이아이지먼트](https://aigement.com)** · Full-stack Engineer &nbsp; <sub>2026.06 – 현재</sub>
 
 - **PLYN**([`바로가기 ↗`](https://plynai.com)) - 구매업무 자동화 서비스 · LLM API 연동 및 공급망(Supply Chain) 도메인 API 설계·구현 (``Python`` · ``FastAPI`` · ``PostgreSQL``)
+- **해상운송 ETA 가시성(Visibility) PoC** - 배송 지연 조기감지 서비스 · 요구사항 정의부터 원천 데이터 수급·자동 적재 파이프라인 설계, 예측 모델 연동, 지연 위험 대시보드 구현까지 end-to-end 담당 (``Python`` · ``FastAPI`` · ``PostgreSQL`` · ``Alembic``)
 
 <br/>
 
