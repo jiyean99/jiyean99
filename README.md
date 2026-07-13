@@ -24,7 +24,8 @@
 
 ## Experience
 
-<img align="absmiddle" src="https://github.com/user-attachments/assets/4bbaa6d3-8930-4a92-bc6d-113ade64dfe2" height="20" alt="AIgement" /> &nbsp;**[(주)에이아이지먼트](https://aigement.com)** &nbsp;·&nbsp; Full-stack Engineer &nbsp;&nbsp;`2026.06 – 현재`
+> <img align="absmiddle" src="https://github.com/user-attachments/assets/4bbaa6d3-8930-4a92-bc6d-113ade64dfe2" height="20" alt="AIgement" /> &nbsp;**[(주)에이아이지먼트](https://aigement.com)** &nbsp;·&nbsp; Full-stack Engineer &nbsp;&nbsp;`2026.06 – 현재`<br/>
+> <sub>B2B SaaS·PoC 개발. 요구사항 정의부터 데이터 파이프라인·API·화면까지 end-to-end로 담당합니다.</sub>
 
 - **PLYN**([`바로가기 ↗`](https://plynai.com)) &nbsp;·&nbsp; `2026.06 – 진행중`
 
@@ -103,7 +104,8 @@
 
 <br/>
 
-<img align="absmiddle" src="https://www.google.com/s2/favicons?domain=zempublic.co.kr&sz=64" width="18" /> &nbsp;**[(주)잼퍼블릭](https://zempublic.co.kr)** &nbsp;·&nbsp; Frontend Engineer &nbsp;&nbsp;`2023.03 – 2025.08` <sub>(2년 5개월)</sub>
+> <img align="absmiddle" src="https://www.google.com/s2/favicons?domain=zempublic.co.kr&sz=64" width="18" /> &nbsp;**[(주)잼퍼블릭](https://zempublic.co.kr)** &nbsp;·&nbsp; Frontend Engineer &nbsp;&nbsp;`2023.03 – 2025.08` <sub>(2년 5개월)</sub><br/>
+> <sub>실시간 웹 서비스와 사내 시스템 프론트엔드를 단독으로 설계·운영했습니다.</sub>
 
 - **승부사 온라인**([`바로가기 ↗`](https://www.adventurer.co.kr/)) &nbsp;·&nbsp; `2023.03 – 2025.08`
 
