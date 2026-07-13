@@ -27,7 +27,13 @@
 <img align="absmiddle" src="https://github.com/user-attachments/assets/4bbaa6d3-8930-4a92-bc6d-113ade64dfe2" height="20" alt="AIgement" /> **[(주)에이아이지먼트](https://aigement.com)** · Full-stack Engineer &nbsp; <sub>2026.06 – 현재</sub>
 
 - **PLYN**([`바로가기 ↗`](https://plynai.com)) - 구매업무 자동화 서비스 · LLM API 연동 및 공급망(Supply Chain) 도메인 API 설계·구현 (``Python`` · ``FastAPI`` · ``PostgreSQL``)
-- **해상운송 ETA 가시성(Visibility) PoC** - 배송 지연 조기감지 서비스 · 요구사항 정의부터 원천 데이터 수급·자동 적재 파이프라인 설계, 예측 모델 연동, 지연 위험 대시보드 구현까지 end-to-end 담당 (``Python`` · ``FastAPI`` · ``PostgreSQL`` · ``Alembic``)
+- **해상운송 ETA 가시성(Visibility) PoC** *(고객사: 글로벌 가전 제조사)* – 배송 지연 조기감지 서비스 · 요구사항 정의부터 원천 데이터 수급·자동 적재 파이프라인 설계, 예측 모델 연동, 지연 위험 대시보드 구현까지 end-to-end 담당 (`Python` · `FastAPI` · `PostgreSQL` · `Alembic` · `React`)
+  - **요구사항 명세·원천 데이터 정의** — 물류사 export 항목을 업무 요건과 매핑해 수급 범위·주기·필수 컬럼 확정
+  - **일 스냅샷 자동 적재 파이프라인 설계** — 외부 export 5종을 append-only 구조로 적재(누적 약 20만 행), 파일 해시 기반 이력 테이블로 멱등성·재현성 확보
+  - **변화 감지 구조 설계** — 일 변경률 8.4% 실측 → 원본은 landing 보존, 변화 추적은 파생 레이어가 전담하는 계층 분리안 도출
+  - **엔티티 키 검증** — 데이터 프로파일링으로 복합 자연키 유일성 99.6% 확보, 잔여 중복은 원천의 부분정보 분할 방출이 원인임을 규명해 대체 판정 로직 제안
+  - **예측 모델 연동·서비스화** — DS 개발 ETA 지연 예측 모델의 입력 데이터 규격화 및 일 배치 연결, 예측 결과를 위험 신호로 대시보드 노출
+
 
 <br/>
 
