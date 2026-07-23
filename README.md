@@ -22,13 +22,13 @@
 ![Gemini](assets/tech/gemini.svg) ![Claude](assets/tech/claude.svg) ![MCP](assets/tech/mcp.svg)
 
 **Database & Messaging**<br/>
-![MySQL](assets/tech/MySQL.svg) ![PostgreSQL](assets/tech/postgresql.svg) ![Redis](assets/tech/redis.svg) ![Kafka](assets/tech/kafka.svg)
+![MySQL](assets/tech/mysql.svg) ![PostgreSQL](assets/tech/postgresql.svg) ![Redis](assets/tech/redis.svg) ![Kafka](assets/tech/kafka.svg)
 
 **Infra & DevOps**<br/>
 ![Docker](assets/tech/docker.svg) ![Kubernetes](assets/tech/kubernetes.svg) ![AWS](assets/tech/aws.svg) ![Terraform](assets/tech/terraform.svg)
 
 **Frontend**<br/>
-![React](assets/tech/react.svg) ![Next.js](assets/tech/next-js.svg) ![Vue.js](assets/tech/vue-js.svg) ![Expo](assets/tech/Expo.svg) ![TailwindCSS](assets/tech/Tailwind-css.svg) ![Ant-design](assets/tech/Ant-design.svg)
+![React](assets/tech/react.svg) ![Next.js](assets/tech/next-js.svg) ![Vue.js](assets/tech/vue-js.svg) ![Expo](assets/tech/expo.svg) ![TailwindCSS](assets/tech/tailwind-css.svg) ![Ant-design](assets/tech/ant-design.svg)
 
 **Collaboration & Tools**<br/>
 ![Git](assets/tech/git.svg) ![GitHub](assets/tech/github.svg) ![jira](assets/tech/jira.svg) ![Figma](assets/tech/figma.svg) ![notion](assets/tech/notion.svg)
