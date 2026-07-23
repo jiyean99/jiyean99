@@ -1,8 +1,24 @@
+<a id="top" name="top"></a>
+
 # 경력 상세 · Experience
 
 > [← 프로필로 돌아가기](../README.md)
 >
 > 프로젝트별 상세 역할·성과와 아키텍처 도식입니다. 요약은 프로필 README를 참고하세요.
+
+**목차**
+
+**(주)에이아이지먼트**
+- [PLYN — AI-Native SRM 플랫폼](#plyn)
+- [해상운송 정시성 Visibility PoC](#shipping)
+- [스토리지니](#storygenie)
+- [팀 협업 체계·개발 환경 구축](#team)
+
+**(주)잼퍼블릭**
+- [승부사 온라인](#adventurer)
+- [사내 매출 통계 대시보드](#dashboard)
+- [챔프포커](#champpoker)
+- [신규 사업부 모바일 MVP](#mobile)
 
 ---
 
@@ -10,21 +26,22 @@
 
 > B2B SaaS·PoC를 기획·디자인·개발·QA까지 단독 전담. 요구사항 정의와 시퀀스 플로우·와이어프레임·프로토타입 설계부터 데이터 파이프라인·API·화면 구현·QA까지 제품 전 과정을 end-to-end로 담당합니다.
 
-<a id="plyn"></a>
+<a id="plyn" name="plyn"></a>
 
 ### PLYN — AI-Native SRM 플랫폼
 
 [`바로가기 ↗`](https://plynai.com) &nbsp;·&nbsp; `2026.06 – 진행중`
 
-공급사 발굴부터 RFQ·협상까지 거래 전 프로세스를 자동 실행하고, CES 데모로 리스크 예측·설명까지 확장.
+공급사 발굴부터 RFQ·협상까지 거래 전 프로세스를 자동 실행하고, 대외 데모로 리스크 예측·설명까지 확장.
 
-``Python`` ``FastAPI`` ``PostgreSQL`` ``Alembic`` ``AWS Cognito`` ``Terraform`` ``Docker`` ``React``
+![Python](../assets/tech/python.svg) ![FastAPI](../assets/tech/fastapi.svg) ![PostgreSQL](../assets/tech/postgresql.svg) ![Alembic](../assets/tech/alembic.svg) ![AWS Cognito](../assets/tech/aws-cognito.svg) ![Terraform](../assets/tech/terraform.svg) ![Docker](../assets/tech/docker.svg) ![React](../assets/tech/react.svg)
+
+> [개발기 → LLM 하나로는 안 됐다 — 7개 시나리오를 위한 프로바이더 추상화 계층](writing/plyn-llm-provider-abstraction.md)
 
 ![](https://img.shields.io/badge/공급사_도메인-9종_End--to--End-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/설계_스펙-상태머신_5_·_도메인이벤트_10-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/AI_챗봇-공급사_발굴_워크플로우-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/LLM_연동-Gemini_·_Claude_멀티_프로바이더-2563EB?style=flat-square&labelColor=475569)
-![](https://img.shields.io/badge/CES_2027-Innovation_Award_출품-2563EB?style=flat-square&labelColor=475569)
 
 #### 아키텍처
 
@@ -83,14 +100,20 @@ flowchart LR
 - **상태 전이 정의·정합성 QA** — 발굴·RFQ·온보딩·협상 등 주요 흐름을 상태머신 명세로 정의하고, 챗봇 스캔 결과가 상세 화면까지 정합성 있게 이어지는지 시나리오 기반으로 검증·회귀 방지
 - **LLM·도메인 테스트** — LLM 클라이언트(gemini·claude·chat) 단위 테스트 + 챗·발굴 통합 테스트로 회신 안정성 확보
 
-**⑥ CES 데모 — 대외 산출물**
-- **CES 데모 플로우 단독 구성** — 문서 기반 수집 파이프라인을 단일 흐름으로 묶어 리스크 컨텍스트를 2분 내 확보하는 시나리오 설계
+**⑥ 대외 데모 — 대외 산출물**
+- **대외 데모 플로우 단독 구성** — 문서 기반 수집 파이프라인을 단일 흐름으로 묶어 리스크 컨텍스트를 2분 내 확보하는 시나리오 설계
 - **인터랙티브 리포트 구현** — 예측 → 설명 → 대응으로 이어지는 리스크 리포트를 하나의 화면 흐름으로 구현
 - **리스크 보드·원인 카드 UI** — 위험 등급 보드와 원인 그래프를 시각화해 위험의 근거를 화면에서 설명
 
+<p align="right">
+
+[↑ 맨 위로](#top)
+
+</p>
+
 ---
 
-<a id="lge"></a>
+<a id="shipping" name="shipping"></a>
 
 ### 해상운송 정시성 Visibility PoC
 
@@ -98,7 +121,9 @@ flowchart LR
 
 화물 지연 리스크를 조기 감지하는 정시성 Visibility 플랫폼 — 에이전트(적재·정규화) 골격·인프라 세팅부터 위험 산출·모니터링 대시보드까지 백그라운드·웹 양 구간 단독 담당.
 
-``Python`` ``FastAPI`` ``PostgreSQL`` ``Alembic`` ``psycopg`` ``Vue 3`` ``Docker`` ``AWS``
+![Python](../assets/tech/python.svg) ![FastAPI](../assets/tech/fastapi.svg) ![PostgreSQL](../assets/tech/postgresql.svg) ![Alembic](../assets/tech/alembic.svg) ![psycopg](../assets/tech/psycopg.svg) ![Vue 3](../assets/tech/vue-3.svg) ![Docker](../assets/tech/docker.svg) ![AWS](../assets/tech/aws.svg)
+
+> [개발기 → 정확한 예측이 불가능하다는 걸 인정하는 데서 시작한 설계](writing/shipping-visibility-design.md)
 
 ![](https://img.shields.io/badge/자연키_유일성-99.6%25-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/일_변경률_실측-8.4%25-2563EB?style=flat-square&labelColor=475569)
@@ -112,7 +137,7 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  FTV["FTV / GTN 덤프"] -->|"append-only 적재"| RAW[("raw<br/>원본 불변")]
+  SRC["물류사 원천 시스템 덤프"] -->|"append-only 적재"| RAW[("raw<br/>원본 불변")]
   RAW --> CORE[("core<br/>정규화 · 위험 산출")]
   DS["DS 예측 모델"] -.->|"일 배치"| CORE
   CORE --> SVC[("svc<br/>웹 표면 · 뷰")]
@@ -123,7 +148,7 @@ flowchart LR
 #### 상세 역할 및 성과
 
 **① 기획·설계 — 요구사항부터 화면 정의까지**
-- **요구사항 명세·데이터 정의서 작성** — 물류사 FTV export 항목을 업무 요건과 매핑해 수급 범위·주기·필수 컬럼을 확정, 데이터정의서·화면기능정의서(v1.3)·WBS 등 기획 산출물 제작
+- **요구사항 명세·데이터 정의서 작성** — 물류사 원천 시스템 export 항목을 업무 요건과 매핑해 수급 범위·주기·필수 컬럼을 확정, 데이터정의서·화면기능정의서(v1.3)·WBS 등 기획 산출물 제작
 - **리스크 판단 기준 설계** — 단일 스냅샷 데이터로는 정확한 ETA 예측이 불가함을 정직하게 스코핑, 핵심 산출을 위험 등급(진행·주의·회피) + 근거 한 줄로 재정의하고 평가 기준을 "회피 권고 묶음의 정밀도"로 확정
 
 **② 데이터 아키텍처 — raw·core·svc 3계층 분리**
@@ -137,7 +162,7 @@ flowchart LR
 
 **④ 에이전트(백그라운드) — 적재·정규화 파이프라인 골격 구현**
 - **agent–DS 책임 경계·핸드오프 계약 설계** — 적재·정규화의 물리 골격(빈 테이블·Alembic 마이그레이션·멱등 적재 틀)은 agent가, 등급·근거 산식은 DS가 맡도록 경계를 정의하고 PostgreSQL 단일 결합으로 핸드오프
-- **FTV/GTN 덤프 랜딩 구축** — 외부 덤프를 원형 1:1로 적재하는 랜딩 12테이블을 Alembic으로 구성
+- **원천 시스템 덤프 랜딩 구축** — 외부 덤프를 원형 1:1로 적재하는 랜딩 12테이블을 Alembic으로 구성
 - **일 스냅샷 캡처 체계** — 소급 불가한 관측 이력(eta_observation, append-only)을 매일 캡처하는 ingest_run 메타 구조를 최우선 구축, 파일 해시 이력으로 멱등성 확보 → 동일 파일 중복 적재 0건(누적 약 20만 행)
 
 **⑤ 위험 산출·서비스화**
@@ -149,9 +174,15 @@ flowchart LR
 - **모듈러 모놀리식 백엔드** — booking·risk·alarm·feedback 도메인을 내부 HTTP 계약으로 분리, 멀티 스키마 Alembic로 마이그레이션 관리
 - **위험 보드·대량 목록 UX** — B/L 목록·경로·상태·ETA 기준 위험구간을 임계값별로 시각화, 다중 검색·필터 조합 환경에서 조회 성능 확보
 
+<p align="right">
+
+[↑ 맨 위로](#top)
+
+</p>
+
 ---
 
-<a id="storygenie"></a>
+<a id="storygenie" name="storygenie"></a>
 
 ### 스토리지니
 
@@ -159,7 +190,7 @@ flowchart LR
 
 App/Agent 파이프라인 기반 AI 맞춤형 동화책 생성 서비스 — 인수인계 후 생성 파이프라인 안정화·확장. 아이 정보·사진으로 LoRA 학습 → 개인화 삽화 생성 → 편집·PDF·인쇄까지 한 흐름으로 처리.
 
-``Python 3.13`` ``FastAPI`` ``PostgreSQL`` ``Redis``
+![Python 3.13](../assets/tech/python-3-13.svg) ![FastAPI](../assets/tech/fastapi.svg) ![PostgreSQL](../assets/tech/postgresql.svg) ![Redis](../assets/tech/redis.svg)
 
 ![](https://img.shields.io/badge/구조-App·Agent_2프로세스_·_통신_3채널-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/외부_연동-7종-2563EB?style=flat-square&labelColor=475569)
@@ -191,6 +222,12 @@ flowchart LR
 - input → 승인 → 처리 → 검수 → 템플릿 → 다운로드 6단계 흐름에서 생성 실패·지연 구간 대응
 - 외부 연동 7종(ComfyUI·AIToolkit(LoRA)·Gemini·Claude·Sendon·Naver·SMTP)의 실패·타임아웃 처리로 파이프라인 안정화
 
+<p align="right">
+
+[↑ 맨 위로](#top)
+
+</p>
+
 <!-- TODO(B안): 앞으로 작업하며 "숫자가 실제로 나온 뒤" 채울 정량 성과. 측정·개선 결과가 확보되면
      __ 를 실제 값으로 바꾸고 주석을 해제해 배지/상세로 노출할 것. (개발 순서: 계측 → 안정화 → 확장)
 ![](https://img.shields.io/badge/생성_성공률-__%25-2563EB?style=flat-square&labelColor=475569)
@@ -203,7 +240,7 @@ flowchart LR
 
 ---
 
-<a id="team"></a>
+<a id="team" name="team"></a>
 
 ### 팀 협업 체계·개발 환경 구축
 
@@ -218,6 +255,12 @@ flowchart LR
 - **Slack Git 알림 봇 신설** — 커밋·PR·배포 이벤트를 Slack으로 자동 알림해 팀 개발 흐름 가시화
 - **개발 워크플로우 정비** — 흩어진 커뮤니케이션을 티켓·알림 중심으로 통합
 
+<p align="right">
+
+[↑ 맨 위로](#top)
+
+</p>
+
 <!--
 - **항공물류 PoC** · `2026.07 – 예정` · 공공 부문 · 정부지원사업
   항공 화물 운송 데이터 기반 PoC — 프로토타입 개발 착수 예정
@@ -230,7 +273,7 @@ flowchart LR
 
 > 실시간 웹 서비스와 사내 시스템 프론트엔드를 단독으로 설계·운영했습니다.
 
-<a id="adventurer"></a>
+<a id="adventurer" name="adventurer"></a>
 
 ### 승부사 온라인
 
@@ -238,7 +281,7 @@ flowchart LR
 
 대규모 실시간 스포츠 베팅 웹 애플리케이션 — PC·모바일 완전 대응 프론트엔드 개발(741파일·15만 라인 규모의 프로덕션).
 
-``React 16`` ``TypeScript`` ``MobX 5`` ``Socket.io`` ``Emotion`` ``Webpack 4``
+![React 16](../assets/tech/react-16.svg) ![TypeScript](../assets/tech/typescript.svg) ![MobX 5](../assets/tech/mobx-5.svg) ![Socket.io](../assets/tech/socket-io.svg) ![Emotion](../assets/tech/emotion.svg) ![Webpack 4](../assets/tech/webpack-4.svg)
 
 ![](https://img.shields.io/badge/대규모_프로덕션-38페이지_·_MobX_31스토어-0EA5E9?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/실시간_이벤트_핸들러-200+-0EA5E9?style=flat-square&labelColor=475569)
@@ -283,9 +326,15 @@ flowchart LR
 - 170+ 설정 키를 TypeScript enum(`GlobalStoreKey`)으로 중앙 정의해 코드 재배포 없이 기능 on/off·URL·경제 수치를 제어
 - WebSocket `syncGlobal` 이벤트 → MobX `@observable` 자동 갱신 → 구독 컴포넌트 즉시 반영(새로고침 불필요), 점진적 롤아웃 지원
 
+<p align="right">
+
+[↑ 맨 위로](#top)
+
+</p>
+
 ---
 
-<a id="dashboard"></a>
+<a id="dashboard" name="dashboard"></a>
 
 ### 사내 매출 통계 대시보드
 
@@ -293,7 +342,7 @@ flowchart LR
 
 스포츠 베팅·포커 두 도메인의 매출·유저·게임 데이터를 실시간 시각화하는 어드민 리포트 대시보드.
 
-``Vue 2.7`` ``Vuex 3`` ``Vuetify`` ``Highcharts 10`` ``Socket.io``
+![Vue 2.7](../assets/tech/vue-2-7.svg) ![Vuex 3](../assets/tech/vuex-3.svg) ![Vuetify](../assets/tech/vuetify.svg) ![Highcharts 10](../assets/tech/highcharts-10.svg) ![Socket.io](../assets/tech/socket-io.svg)
 
 ![](https://img.shields.io/badge/대시보드-ADV_·_Champ_이중_도메인-0EA5E9?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/시각화-Highcharts_6종_·_다이얼로그_14개-0EA5E9?style=flat-square&labelColor=475569)
@@ -325,9 +374,15 @@ flowchart LR
 - dev/qa/prod webpack 완전 분리(baseURL·BUILD_ENV 주입), 벤더 청크 분리 + 라우트 단위 lazy loading
 - Firebase Hosting SPA rewrites로 History 모드 배포, FileSaver.js로 CSV/Excel 리포트 내보내기
 
+<p align="right">
+
+[↑ 맨 위로](#top)
+
+</p>
+
 ---
 
-<a id="champpoker"></a>
+<a id="champpoker" name="champpoker"></a>
 
 ### 챔프포커
 
@@ -335,7 +390,7 @@ flowchart LR
 
 Unity 웹보드 게임 — 웹뷰 인터페이스 퍼블리싱.
 
-``JavaScript`` ``JS Bridge`` ``Unity WebView``
+![JavaScript](../assets/tech/javascript.svg) ![JS Bridge](../assets/tech/js-bridge.svg) ![Unity WebView](../assets/tech/unity-webview.svg)
 
 ![](https://img.shields.io/badge/콘텐츠_관리-JSON_기반_체계화-0EA5E9?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/연동-JS_Bridge_↔_Unity_WebView-0EA5E9?style=flat-square&labelColor=475569)
@@ -346,9 +401,15 @@ Unity 웹보드 게임 — 웹뷰 인터페이스 퍼블리싱.
 - **웹뷰 스타일 가이드·반응형 대응** — 기기별 해상도·렌더링 차이를 흡수하는 스타일 가이드 정의
 - **기기별 오류 대응 최적화** — iOS/Android 웹뷰 환경별 렌더링 이슈 대응
 
+<p align="right">
+
+[↑ 맨 위로](#top)
+
+</p>
+
 ---
 
-<a id="mobile"></a>
+<a id="mobile" name="mobile"></a>
 
 ### 신규 사업부 모바일 MVP
 
@@ -356,7 +417,7 @@ Unity 웹보드 게임 — 웹뷰 인터페이스 퍼블리싱.
 
 Expo 기반 React Native 마이그레이션 및 프론트엔드 개발.
 
-``Expo`` ``React Native`` ``TypeScript`` ``Zustand`` ``NativeWind``
+![Expo](../assets/tech/expo.svg) ![React Native](../assets/tech/react-native.svg) ![TypeScript](../assets/tech/typescript.svg) ![Zustand](../assets/tech/zustand.svg) ![NativeWind](../assets/tech/nativewind.svg)
 
 ![](https://img.shields.io/badge/iOS_·_Android_동시_배포-2개월_내-0EA5E9?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/배포_사이클-OTA_·_심사_없이_반영-0EA5E9?style=flat-square&labelColor=475569)
@@ -367,6 +428,12 @@ Expo 기반 React Native 마이그레이션 및 프론트엔드 개발.
 - **하이브리드 웹뷰 연동** — 웹 콘텐츠를 WebView로 통합하고 네이티브 브릿지 통신 처리
 - **2개월 내 양 플랫폼 동시 배포** — EAS Build/OTA를 도입해 스토어 심사 없이 수정 반영, 검증 사이클 단축
 - **재작업 리소스 최소화** — 컴포넌트 단위 개발로 빠른 기능 검증 진행
+
+<p align="right">
+
+[↑ 맨 위로](#top)
+
+</p>
 
 ---
 
