@@ -71,6 +71,38 @@ flowchart LR
   ST --> R
 ```
 
+**애플리케이션 워크플로우 — 지출 인테이크부터 재소싱까지 (회차 순환)**
+
+```mermaid
+flowchart LR
+  subgraph BUYER["회원사(구매기업)"]
+    U1["지출 업로드<br/>spend"]
+    U2["절감 대상 확정<br/>savings"]
+  end
+  subgraph OPS["운영사(PLYN)"]
+    P1["품목 분류·정제<br/>category · ml"]
+    P2["Spend 분석·절감 발굴<br/>analytics"]
+    P3["공급사 발굴·Pool<br/>sourcing"]
+    P4["RFP 생성·송부<br/>rfq"]
+    P5["견적 분석·보고서<br/>rfq · analytics"]
+  end
+  subgraph VENDOR["공급사(공급기업)"]
+    V1["온라인 견적 작성<br/>rfq"]
+  end
+  U1 --> P1 --> P2 --> U2 --> P3 --> P4 --> V1 --> P5
+  P5 -.->|"단가 모니터링 · 다음 회차"| U1
+```
+
+**Supplier Health 트리아지 — 신호 → 우선순위 → 액션**
+
+```mermaid
+flowchart TB
+  IN["신호 수집<br/>KPI breach · score change<br/>risk event · compliance gap"] --> PRI["우선순위화<br/>severity × time-to-harm × business_impact"]
+  PRI --> CL["동일 공급사 다중 신호<br/>클러스터링"]
+  CL --> IMP["연관 엔티티 영향 분석<br/>Contract · PO · CAPA"]
+  IMP --> ACT["즉시 액션 제시"]
+```
+
 #### 상세 역할 및 성과
 
 **① 기획·설계 — 제품 정의**
@@ -143,6 +175,27 @@ flowchart LR
   CORE --> SVC[("svc<br/>웹 표면 · 뷰")]
   SVC --> WEB["Vue 대시보드<br/>booking · risk · alarm · feedback"]
   WEB -.->|"feedback_event write"| CORE
+```
+
+**애플리케이션 워크플로우 — 일 스냅샷 멱등 적재 (해시 대조)**
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant SRC as 물류사 덤프
+  participant ING as ingest_run
+  participant RAW as raw (append-only)
+  participant CORE as core
+  participant DS as DS 예측 모델
+  SRC->>ING: 일 스냅샷 파일
+  ING->>ING: 파일 해시 대조
+  alt 신규 해시
+    ING->>RAW: 원형 1:1 적재
+    RAW->>CORE: 정규화 · 위험 산출
+    DS-->>CORE: 지연 예측 (일 배치)
+  else 동일 해시
+    ING-->>ING: 중복 → 적재 skip (재적재 0건)
+  end
 ```
 
 #### 상세 역할 및 성과
@@ -349,6 +402,21 @@ flowchart LR
 ![](https://img.shields.io/badge/접근_제어-등급_기반_권한-0EA5E9?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/빌드-dev·qa·prod_3환경_·_Firebase-0EA5E9?style=flat-square&labelColor=475569)
 
+#### 아키텍처
+
+**이중 도메인 대시보드 — 공유 인증 · 도메인 격리 · 등급 접근 제어**
+
+```mermaid
+flowchart LR
+  API["사내 API"] -->|"쿠키 세션 · withCredentials"| ST["Vuex store.api() 래퍼<br/>에러코드 자동 로그아웃"]
+  SOCK["Socket.io"] -->|"실시간 접속현황"| ST
+  ST --> CH["Highcharts 래퍼<br/>chart-container · 6종"]
+  ST --> GR["등급 · viewType<br/>렌더 차단"]
+  RT["라우터 · lazy load"] --> ADV["ADV 도메인 트리<br/>스포츠 베팅"]
+  RT --> CHP["Champ 도메인 트리<br/>포커"]
+  ST --> RT
+```
+
 #### 상세 역할 및 성과
 
 **① 이중 도메인 대시보드 아키텍처**
@@ -396,6 +464,17 @@ Unity 웹보드 게임 — 웹뷰 인터페이스 퍼블리싱.
 ![](https://img.shields.io/badge/연동-JS_Bridge_↔_Unity_WebView-0EA5E9?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/지원_환경-iOS_·_Android_웹뷰-0EA5E9?style=flat-square&labelColor=475569)
 
+#### 아키텍처
+
+**웹뷰 퍼블리싱 — JSON 콘텐츠 분리 · JS Bridge 연동**
+
+```mermaid
+flowchart LR
+  UNITY["Unity 게임 클라이언트"] <-->|"JS Bridge"| WV["웹뷰 인터페이스<br/>공지 · 이벤트 렌더링"]
+  JSON["JSON 콘텐츠<br/>텍스트 · 스타일 · 이미지"] --> WV
+  WV --> DEV["iOS · Android 웹뷰"]
+```
+
 - **퍼블리싱 관리 체계화** — 텍스트·스타일·이미지 요소를 JSON 기반으로 분리 관리해 코드 변경 없이 콘텐츠를 반영하도록 구조화
 - **JS Bridge ↔ Unity WebView 연동** — 게임 클라이언트와 웹뷰 간 공지·이벤트 렌더링을 브릿지 통신으로 구현
 - **웹뷰 스타일 가이드·반응형 대응** — 기기별 해상도·렌더링 차이를 흡수하는 스타일 가이드 정의
@@ -422,6 +501,21 @@ Expo 기반 React Native 마이그레이션 및 프론트엔드 개발.
 ![](https://img.shields.io/badge/iOS_·_Android_동시_배포-2개월_내-0EA5E9?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/배포_사이클-OTA_·_심사_없이_반영-0EA5E9?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/구조-크로스_플랫폼_단일_코드베이스-0EA5E9?style=flat-square&labelColor=475569)
+
+#### 아키텍처
+
+**크로스 플랫폼 단일 코드베이스 — EAS Build · OTA**
+
+```mermaid
+flowchart LR
+  subgraph EXPO["Expo · React Native 단일 코드베이스"]
+    NW["NativeWind<br/>디자인 시스템"]
+    Z["Zustand<br/>러닝 세션 상태"]
+    WVB["WebView<br/>하이브리드 브릿지"]
+  end
+  EXPO -->|"EAS Build / OTA"| IOS["iOS"]
+  EXPO -->|"EAS Build / OTA"| AND["Android"]
+```
 
 - **크로스 플랫폼 앱 구조 설계** — Expo/RN 기반 iOS·Android 동시 대응 초기 세팅 및 NativeWind 디자인 시스템 구성
 - **러닝 핵심 플로우 화면 개발** — 러닝 기록·세션 상태를 Zustand로 관리하는 코어 플로우 구현
