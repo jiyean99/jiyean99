@@ -28,7 +28,7 @@
 **Full-stack Engineer** &nbsp;·&nbsp; B2B SaaS·PoC를 기획·디자인·개발·QA까지 단독 전담<br/>
 <sub>3개월간 자사 플랫폼 1건 · 고객사 PoC 3건 · 대외 출품 1건 · 전사 과제 2건 병행</sub>
 
-- **[PLYN](docs/experience.md#plyn)** [`↗`](https://plynai.com) — AI-Native SRM. 공급사 도메인 9종 · REST 엔드포인트 32종, 모듈러 모놀리스 · LLM 멀티 프로바이더
+- **[PLYN](docs/experience.md#plyn)** — AI-Native SRM. 공급사 도메인 9종 · REST 엔드포인트 32종, 모듈러 모놀리스 · LLM 멀티 프로바이더
 - **[국제운송 정시성 Visibility PoC](docs/experience.md#shipping)** — 화물 지연 리스크 조기 감지. raw·core·svc 파이프라인부터 대시보드까지 단독
 - **[스토리지니](docs/experience.md#storygenie)** — App/Agent 파이프라인 기반 AI 동화책 생성. 인수인계 무중단 · 파이프라인 안정화
 - **대외 활동 · 팀 운영** — [CES 2027 혁신상 출품](docs/experience.md#ces) · 대외 전시 데모 출품 / [Jira 이관 · Slack Git 알림 봇 · 온보딩 표준화 · TIPS 연구노트 재설계](docs/experience.md#team)
