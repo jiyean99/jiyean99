@@ -6,7 +6,20 @@
 
 | 글 | 프로젝트 | 기간 |
 |:--|:--|:--|
-| [정확한 예측이 불가능하다는 걸 인정하는 데서 시작한 설계](shipping-visibility-design.md) | 해상운송 정시성 Visibility PoC | `2026.06 – 2026.12` |
-| [LLM 하나로는 안 됐다 — 7개 시나리오를 위한 프로바이더 추상화 계층](plyn-llm-provider-abstraction.md) | PLYN | `2026.06 – 진행중` |
+| [정확한 예측이 불가능하다는 걸 인정하는 데서 시작한 설계](shipping-visibility-design.md) | 국제운송 정시성 Visibility PoC | `2026.06 – 2026.12` |
+| [LLM 하나로는 안 됐다 — 7개 시나리오를 위한 프로바이더 추상화 계층](plyn-llm-provider-abstraction.md) | PLYN | `2026.06 – 2026.08` |
+
+### 업무일지 시리즈 — 인증 · 큐 · 무결성
+
+> PLYN을 만들며 내린 결정과 막혔던 지점의 기록입니다. 전문은 [Velog](https://velog.io/@jiyean99/posts) 에 연재하고 있으며, 요약과 결정 근거는 [경력 상세 → PLYN ⑥ 설계 의사결정 기록](../experience.md#plyn) 에 정리했습니다.
+
+| 글 | 주제 |
+|:--|:--|
+| 토큰을 '믿는' 게 아니라 '검증'한다 — FastAPI를 Resource Server로 | JWT · JWKS 검증 |
+| 초대받은 사람이 '자기가 누구'라고 말하게 두면 안 됐다 | 신원 연결 · 위협 모델링 |
+| Redis 없이 작업 큐를 만들었다 — PostgreSQL `SKIP LOCKED` 한 줄 | 작업 큐 |
+| 외래 키(FK)를 안 쓰기로 했다 — 대신 만든 세 겹의 안전망 | 참조 무결성 |
+| Cognito 붙이고 이틀 동안 401만 봤다 — 시계 오차와 `aud` 없는 토큰 | 트러블슈팅 |
+| 제약 하나가 기능 하나를 밀어냈다 — "1신원 = 1조직"이 만든 우회로 | 제약과 기능 |
 
 ---
