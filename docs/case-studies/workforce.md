@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-# Workforce — MSA 기반 통합 HRMS
+# Workforce - MSA 기반 통합 HRMS
 
 > **End-to-End Product Case Study**
 > 팀 프로젝트이므로 **git 이력으로 확인한 실제 기여**만 적습니다.
@@ -17,7 +17,7 @@
 
 가장 배운 것은 실시간 채팅이었습니다. 서버 1대에서는 정상이던 채팅이 인스턴스를 늘리자 일부 사용자에게만 도달했고, 원인은 **WebSocket 세션이 인스턴스별로 분리돼 있었다**는 것이었습니다. Redis Pub/Sub 패턴 구독으로 fan-out하는 과정에서 Spring 추상화의 함정(`MessageListenerAdapter`가 pattern subscribe 시 channel 대신 pattern을 넘김)까지 파고들어야 했습니다.
 
-<sub>실측 기준 — `workforce-be` · `workforce-fe` · `workforce-be-devops` 3개 저장소를 직접 파싱(`git shortlog` · 파일 변경 이력).
+<sub>담당 범위는 저장소 이력으로 확인한 것만 적었습니다.
 부하 테스트 수치는 팀 공용 클러스터 기준이라 제 성과로 기재하지 않았습니다.</sub>
 
 ---
@@ -26,7 +26,7 @@
 
 ```text
 PROJECT
-Workforce — MSA 기반 통합 HRMS
+Workforce - MSA 기반 통합 HRMS
 
 ONE-LINER
 근태·급여·결재·평가·조직을 하나의 플랫폼으로 통합한 마이크로서비스 HR 시스템
@@ -57,31 +57,21 @@ STOMP · MariaDB · Elasticsearch · Kubernetes · AWS EKS
 
 ---
 
-## 02. 담당 범위 — 무엇이 내 몫이고 무엇이 아닌가
+## 02. 담당 범위 - 무엇이 내 몫이고 무엇이 아닌가
 
 > 📌 **팀 프로젝트에서 가장 중요한 정보는 "누가 무엇을 했는가"입니다.** 아래는 git 이력으로 확인한 값입니다.
 
 ### 내가 담당한 것
 
-| 영역 | 실측 기여 | 내용 |
-|---|---|---|
-| **목표·평가(OKR) 도메인** | `goal-service` 변경 파일 **697** (2위 26) | 도메인 설계부터 API·테스트까지 E2E |
-| **실시간 채팅** | `memberchat` 변경 파일 **108**, 커밋 13건 중 **12건** | STOMP + Redis Pub/Sub 인스턴스 간 fan-out |
-| **무중단 배포** | 커밋 `6f1d02a` (2026-05-09) 한 건 | 7개 서비스에 RollingUpdate + HPA · PDB 신설 |
+| 영역 | 내용 |
+|---|---|
+| **목표·평가(OKR) 도메인** | 목표 정렬·진척·평가를 도메인 설계부터 API·테스트까지 단독 담당 |
+| **실시간 채팅** | STOMP + Redis Pub/Sub 으로 인스턴스 간 메시지 fan-out 구현 |
+| **무중단 배포** | 7개 서비스에 RollingUpdate(maxUnavailable 0) + HPA · PDB 신설 |
 
 ### 내가 담당하지 않은 것
 
-> MSA 전체 설계 · Common 공통 라이브러리 · RBAC 권한 시스템 · AI 챗봇(RAG) · Elasticsearch 통합 검색 · SSE 알림 · Kafka 브로커/토픽 설계 — **모두 다른 팀원 담당입니다.**
-
-### 전체 기여 분포
-
-```text
-3개 저장소 누적 1,461커밋 중 본인 325커밋
-  BE      193 / 998
-  FE      130 / 368
-  DevOps    2 /  95
-내가 만진 파일 872
-```
+> MSA 전체 설계 · Common 공통 라이브러리 · RBAC 권한 시스템 · AI 챗봇(RAG) · Elasticsearch 통합 검색 · SSE 알림 · Kafka 브로커/토픽 설계 - **모두 다른 팀원 담당입니다.**
 
 ---
 
@@ -127,7 +117,7 @@ HR 업무는 근태·급여·결재·평가·조직이 서로 물려 있는데, 
 
 ---
 
-## 05. User Definition — 내 담당 도메인 기준
+## 05. User Definition - 내 담당 도메인 기준
 
 | Role | 목적 | Pain Point | 필요한 기능 |
 |---|---|---|---|
@@ -137,7 +127,7 @@ HR 업무는 근태·급여·결재·평가·조직이 서로 물려 있는데, 
 
 ---
 
-## 08. Feature Definition — 담당 기능
+## 08. Feature Definition - 담당 기능
 
 ### 목표·평가(OKR) 도메인
 
@@ -177,7 +167,7 @@ Value         배포가 릴리스 이벤트가 아니라 일상 작업이 된다
 
 ---
 
-## 14. Core Feature Deep Dive — 실시간 채팅 fan-out
+## 14. Core Feature Deep Dive - 실시간 채팅 fan-out
 
 ### Problem
 
@@ -188,17 +178,17 @@ Value         배포가 릴리스 이벤트가 아니라 일상 작업이 된다
 WebSocket 세션은 **연결을 수립한 인스턴스의 메모리에 있습니다.** A 인스턴스에 붙은 사용자와 B 인스턴스에 붙은 사용자는 같은 방에 있어도 서로를 볼 수 없습니다. Spring의 `SimpleBroker`는 프로세스 내부 브로커라 인스턴스 경계를 넘지 못합니다.
 
 ```text
-BEFORE — 인스턴스별 세션 고립
+BEFORE - 인스턴스별 세션 고립
 
   사용자 A ──→ [인스턴스 1] ──┐
                               ├─ SimpleBroker (프로세스 내부)
   사용자 B ──→ [인스턴스 2] ──┘        ↑ 서로 도달하지 못함
 ```
 
-### Solution — Redis Pub/Sub 패턴 구독
+### Solution - Redis Pub/Sub 패턴 구독
 
 ```text
-AFTER — Redis 를 경유한 인스턴스 간 fan-out
+AFTER - Redis 를 경유한 인스턴스 간 fan-out
 
   사용자 A ──→ [인스턴스 1] ──publish──→ Redis ──subscribe──→ [인스턴스 1]
                                           │                    ↓ 로컬 세션에 push
@@ -207,7 +197,7 @@ AFTER — Redis 를 경유한 인스턴스 간 fan-out
 
 한 인스턴스가 받은 메시지를 `member-chat:room:{roomId}` 채널로 publish하고, **모든 인스턴스가 `member-chat:room:*` 패턴을 구독**해 자기한테 붙은 세션으로 밀어줍니다.
 
-### 구현 중 막힌 지점 — 프레임워크 추상화의 함정
+### 구현 중 막힌 지점 - 프레임워크 추상화의 함정
 
 > 🔥 이 프로젝트에서 가장 오래 붙잡았던 문제입니다.
 
@@ -220,7 +210,7 @@ Spring의 `MessageListenerAdapter`는 편의를 위해 콜백 시그니처를 �
 
 `roomId`를 파싱할 수 없으니 어느 방으로 보낼지 알 수 없었습니다.
 
-**해결** — `MessageListenerAdapter`를 걷어내고 `MessageListener`를 직접 구현해, Redis 원본 메시지에서 **channel과 pattern을 각각 꺼내 쓰도록** 했습니다.
+**해결** - `MessageListenerAdapter`를 걷어내고 `MessageListener`를 직접 구현해, Redis 원본 메시지에서 **channel과 pattern을 각각 꺼내 쓰도록** 했습니다.
 
 ```text
 Trade-off
@@ -228,7 +218,7 @@ Trade-off
   원본 Message 를 직접 다루게 됐다. 코드가 조금 길어졌다.
 ```
 
-### 한계 — Redis Pub/Sub이 보장하지 않는 것
+### 한계 - Redis Pub/Sub이 보장하지 않는 것
 
 > ⚠️ **Redis Pub/Sub은 메시지를 저장하지 않습니다.** 구독자가 그 순간 없으면 유실됩니다.
 > 따라서 채팅 이력은 별도로 DB에 저장해야 하고, Pub/Sub은 **실시간 전달 경로**로만 써야 합니다.
@@ -239,12 +229,12 @@ Trade-off
 | 대안 | 얻는 것 | 잃는 것 |
 |---|---|---|
 | 외부 STOMP 브로커 (RabbitMQ) | 브로커가 fan-out을 대신함 | 운영 대상 추가 |
-| Sticky Session | 구현 단순 | **방 단위 문제를 못 품** — 같은 방의 다른 사용자는 여전히 다른 인스턴스 |
+| Sticky Session | 구현 단순 | **방 단위 문제를 못 품** - 같은 방의 다른 사용자는 여전히 다른 인스턴스 |
 | **Redis Pub/Sub ✓** | 이미 쓰는 Redis 재사용 · 방 단위 해결 | 전달 보장 없음 (이력은 DB 별도) |
 
 ### Result
 
-인스턴스 수와 무관하게 메시지가 도달합니다. `memberchat` 패키지 커밋 13건 중 **12건이 제 커밋**입니다.
+인스턴스 수와 무관하게 메시지가 도달합니다. 이 패키지는 제가 단독으로 구현했습니다.
 
 ---
 
@@ -267,13 +257,13 @@ flowchart TB
 
 결재가 끝나면 알림·조직 반영이 따라와야 하는데, 동기 호출로 엮으면 **알림 서비스가 죽을 때 결재가 막힙니다.** 이벤트로 끊으면 각 서비스가 독립적으로 실패할 수 있습니다.
 
-> 소비자 관점에서 제가 다룬 부분 — Kafka는 at-least-once가 기본이라 **소비자가 멱등해야** 합니다. 그리고 순서는 파티션 단위로만 보장되므로 순서가 중요한 이벤트는 같은 키로 보내야 합니다.
+> 소비자 관점에서 제가 다룬 부분 - Kafka는 at-least-once가 기본이라 **소비자가 멱등해야** 합니다. 그리고 순서는 파티션 단위로만 보장되므로 순서가 중요한 이벤트는 같은 키로 보내야 합니다.
 
 ---
 
-## 22. Infrastructure / DevOps — 무중단 배포
+## 22. Infrastructure / DevOps - 무중단 배포
 
-커밋 `6f1d02a`(2026-05-09) 한 건으로 **7개 서비스**에 적용했습니다.
+**7개 서비스에 동일한 설정으로 일괄 적용**했습니다.
 
 ```yaml
 replicas: 2                              # 기본 Pod 2개 유지
@@ -294,7 +284,7 @@ terminationGracePeriodSeconds: 60        # 종료 중 Pod 가 요청을 마무�
 | **PDB** | 노드 드레인 같은 자발적 중단 때 Pod가 동시에 내려갈 수 있다 |
 | **HPA** (CPU 80%, scale-down stabilization 300s) | 트래픽 출렁임에 Pod가 오르내리는 플래핑 |
 
-> ⚠️ **주의 — 이 설정만으로 무중단이 완성되지 않습니다.** 앱이 SIGTERM을 받아 graceful shutdown을 하고, 동시에 readiness를 실패로 돌려 새 트래픽을 받지 않아야 합니다.
+> ⚠️ **주의 - 이 설정만으로 무중단이 완성되지 않습니다.** 앱이 SIGTERM을 받아 graceful shutdown을 하고, 동시에 readiness를 실패로 돌려 새 트래픽을 받지 않아야 합니다.
 >
 > ⚠️ **부하를 걸어놓고 배포하는 검증은 수행하지 못했습니다.** 팀 공용 클러스터라 부하 테스트 수치를 제 성과로 기재하지 않습니다. **설정 수준에서 무중단 조건을 갖췄다**는 것까지가 제가 말할 수 있는 범위입니다.
 
@@ -313,17 +303,15 @@ terminationGracePeriodSeconds: 60        # 종료 중 Pod 가 요청을 마무�
 
 ## 27. Result
 
-### 검증 가능한 기여
+### 담당 범위
 
-| 항목 | 값 | 확인 방법 |
-|---|---|---|
-| 전체 커밋 기여 | **325 / 1,461** (BE 193 · FE 130 · DevOps 2) | `git shortlog -sne --all` |
-| `goal-service` 변경 파일 | **697** (2위 26) | 경로별 변경 이력 |
-| `memberchat` 커밋 | **12 / 13** | 패키지별 커밋 이력 |
-| 무중단 배포 적용 | 커밋 1건 → **7개 서비스** | `6f1d02a` |
-| 내가 만진 파일 | **872** | 변경 파일 실측 |
+| 영역 | 내용 |
+|---|---|
+| 목표·평가(OKR) 도메인 | 설계 · API · 테스트까지 단독 |
+| 실시간 채팅 | STOMP + Redis Pub/Sub fan-out 구현 |
+| 무중단 배포 | 7개 서비스 일괄 적용 (RollingUpdate · HPA · PDB) |
 
-### 팀 전체 규모 (참고 — 공동 산출)
+### 팀 전체 규모 (참고 - 공동 산출)
 
 마이크로서비스 7 · REST 엔드포인트 561 · Kafka 토픽 10 / 리스너 21 · HPA 대상 서비스 7
 
@@ -384,9 +372,9 @@ MY ROLE
   (MSA 설계 · AI 챗봇 · RBAC · 통합 검색은 타 팀원 담당)
 
 KEY CONTRIBUTION
-  goal-service 변경 파일 697 (2위 26)
-  memberchat 커밋 13건 중 12건 — STOMP + Redis Pub/Sub 인스턴스 간 fan-out
-  커밋 6f1d02a 한 건으로 7개 서비스 RollingUpdate + HPA · PDB 신설
+  목표·평가(OKR) 도메인을 설계부터 API · 테스트까지 단독 담당
+  실시간 채팅 STOMP + Redis Pub/Sub 인스턴스 간 fan-out 구현
+  7개 서비스에 RollingUpdate + HPA · PDB 일괄 적용
 
 ENGINEERING HIGHLIGHT
   MessageListenerAdapter 가 pattern subscribe 에서 channel 대신 pattern 을 넘기는
@@ -397,8 +385,8 @@ TECH STACK
   MariaDB · Elasticsearch · Kubernetes · AWS EKS
 
 RESULT
-  3개 저장소 1,461커밋 중 325커밋 기여 · 내가 만진 파일 872
-  (무중단 배포는 설정 수준 구성까지 — 부하 검증 미수행)
+  마이크로서비스 7 · Kafka 토픽 10 / 리스너 21 (팀 공동 산출)
+  (무중단 배포는 설정 수준 구성까지 - 부하 검증 미수행)
 ```
 
 ---

@@ -1,4 +1,4 @@
-# Tech Stack — 전체
+# Tech Stack - 전체
 
 > [← 프로필로 돌아가기](../README.md)
 >

@@ -49,25 +49,25 @@
 
 <br/>
 
-### [PLYN — AI-Native SRM 플랫폼](case-studies/plyn.md) &nbsp;<sub>`주력`</sub>
+### [PLYN - AI-Native SRM 플랫폼](case-studies/plyn.md) &nbsp;<sub>`주력`</sub>
 
 기업 구매 지출을 분류·분석해 절감 기회를 찾고 공급사 매칭까지 잇는 B2B SaaS.
 
 ```text
 PROBLEM   구매 지출이 표준화되지 않아 집계·절감·공급사 선정이 사람의 경험에 의존
 SOLUTION  인테이크 → 분류 → 절감 → 매칭을 한 시스템으로 잇고, 산출에 판단 근거를 병기
-ROLE      엔지니어 1인 — 기획 · 설계 · 개발 · QA 단독
+ROLE      엔지니어 1인 - 기획 · 설계 · 개발 · QA 단독
 ```
 
 | 핵심 결정 | 내용 |
 |---|---|
-| 모듈러 모놀리스 | 물리는 모놀리스, 논리는 MSA 규약 — 운영 비용을 늘리지 않고 분해 가역성 확보 |
+| 모듈러 모놀리스 | 물리는 모놀리스, 논리는 MSA 규약 - 운영 비용을 늘리지 않고 분해 가역성 확보 |
 | 도메인 경계 CI 게이트 | `import-linter` 계약 2건이 커밋 전에 위반을 차단 (2 kept · 0 broken) |
 | 물리 FK 배제 | 테스트가 FK 부재를 단언 + 논리 참조 51관계 정찰 러너 |
 | PostgreSQL SKIP LOCKED | 작업 상태와 도메인 데이터를 같은 트랜잭션에 두기 위해 Redis를 걷어냄 |
 
-<sub>**실측** — Phase 1 구현 5도메인(설계 9종) · REST 32종 · 테이블 26 · 테스트 308 · Alembic 21<br/>
-**기술** — Python · FastAPI · SQLAlchemy 2.0 · PostgreSQL · AWS Cognito · Terraform · React</sub>
+<sub>**실측**: Phase 1 구현 5도메인(설계 9종) · REST 32종 · 테이블 26 · 테스트 308 · Alembic 21<br/>
+**기술**: Python · FastAPI · SQLAlchemy 2.0 · PostgreSQL · AWS Cognito · Terraform · React</sub>
 
 [`케이스 스터디 전문 →`](case-studies/plyn.md)
 
@@ -86,18 +86,18 @@ ROLE      백그라운드 · 웹 양 구간 단독 (전체 PoC 기간 중 담당
 | 핵심 결정 | 내용 |
 |---|---|
 | raw · core · svc 3계층 | "원본이 깨져 들어왔는지, 우리가 깨뜨렸는지"를 나중에도 구분하기 위해 |
-| ETA 2트랙 산출 | 구간 누적(ETA2) **98.13%** · 모델 산출(ETA3) **85.56%** — 화면에서 전환 |
-| 빈 값의 3분류 | 서빙 뷰 없음 / 모델 입력 없음 / 트랙 미실행 — 어디를 고쳐야 값이 느는지 남김 |
+| ETA 2트랙 산출 | 구간 누적(ETA2) **98.13%** · 모델 산출(ETA3) **85.56%** - 화면에서 전환 |
+| 빈 값의 3분류 | 서빙 뷰 없음 / 모델 입력 없음 / 트랙 미실행 - 어디를 고쳐야 값이 느는지 남김 |
 | 감시 단위 재설계 | systemd는 프로세스를 보는데 죽은 건 asyncio 태스크 → 2단 계층으로 하향 |
 
-<sub>**실측** — 조인 쿼리 2h 8m → **15s** · AIS 무응답 13h → **30초 감지** · 항만 키 조인 일치율 99.6%<br/>
-**기술** — Python · FastAPI · PostgreSQL · Alembic · Vue 3 · Docker · AWS</sub>
+<sub>**실측**: 조인 쿼리 2h 8m → **15s** · AIS 무응답 13h → **30초 감지** · 항만 키 조인 일치율 99.6%<br/>
+**기술**: Python · FastAPI · PostgreSQL · Alembic · Vue 3 · Docker · AWS</sub>
 
 [`케이스 스터디 전문 →`](case-studies/shipping-visibility.md)
 
 <br/>
 
-### [스토리지니 — AI 동화책 생성 서비스](case-studies/storygenie.md) &nbsp;<sub>`인수인계`</sub>
+### [스토리지니 - AI 동화책 생성 서비스](case-studies/storygenie.md) &nbsp;<sub>`인수인계`</sub>
 
 App/Agent 2프로세스 구조의 AI 동화책 생성 서비스를 **전임자 퇴사 시점에 인수**해 무중단 이관·안정화.
 
@@ -107,7 +107,7 @@ SOLUTION  코드와 실행 경로를 직접 따라가 실패 지점을 특정하
 ROLE      인수인계 · 파이프라인 안정화 · 온보딩 문서 작성
 ```
 
-<sub>**실측** — App/Agent 2프로세스 · 통신 3채널(REST · 콜백 · 잡 큐) · REST 98종 · 외부 연동 7종</sub>
+<sub>**실측**: App/Agent 2프로세스 · 통신 3채널(REST · 콜백 · 잡 큐) · REST 98종 · 외부 연동 7종</sub>
 
 [`케이스 스터디 전문 →`](case-studies/storygenie.md)
 
@@ -133,11 +133,11 @@ RESULT    테스트 416개 통과 · 32,237 LOC 전수 검토 · 대외 수치 3
 
 **Frontend Project Lead** · 실시간 웹 서비스와 사내 시스템 프론트엔드를 단독 설계·운영
 
-기능 기획서 · 디자인 시안 · 프론트엔드 개발 · QA를 **한 사람 안에서 연결**했습니다. 모노레포 누적 6,441커밋 중 **926커밋** 기여, 저장소 6개 동시 담당.
+기능 기획서 · 디자인 시안 · 프론트엔드 개발 · QA를 **한 사람 안에서 연결**했습니다. 모노레포 내 저장소 6개를 동시에 담당했습니다.
 
 <br/>
 
-### [승부사 온라인 — 대규모 실시간 스포츠 베팅 웹앱](case-studies/adventurer.md) &nbsp;<sub>`주력` `2년 6개월`</sub>
+### [승부사 온라인 - 대규모 실시간 스포츠 베팅 웹앱](case-studies/adventurer.md) &nbsp;<sub>`주력` `2년 6개월`</sub>
 
 실시간 배당·경기 상태가 초 단위로 바뀌는 환경에서 2년 6개월간 기능 추가와 장애 대응을 이어간 프로덕션.
 
@@ -152,9 +152,9 @@ ROLE      프론트엔드 단독 설계 · 운영
 | 이중 소켓 | Socket.io + Native WebSocket 두 구현을 런타임 전환, 막힌 환경은 polling 폴백 |
 | wildcard 단일 진입점 | 이벤트 26종을 리스너 26개가 아니라 `.on('*')` 한 경로로 라우팅 |
 | MobX 도메인 스토어 29종 | 화면이 아니라 도메인으로 분리해 변경된 값 구독자만 리렌더 |
-| Remote Config 250키 | enum 중앙 정의 + 소켓 갱신 — **값을 바꾸는 데 배포가 필요하면 그건 설정이 아니라 상수** |
+| Remote Config 250키 | enum 중앙 정의 + 소켓 갱신 - **값을 바꾸는 데 배포가 필요하면 그건 설정이 아니라 상수** |
 
-<sub>**실측** — 741 파일(TSX 538 · TS 203) · 포털 소켓 이벤트 26종 · 라이브 프로토콜 12종 · Remote Config 250키<br/>
+<sub>**실측**: 741 파일(TSX 538 · TS 203) · 포털 소켓 이벤트 26종 · 라이브 프로토콜 12종 · Remote Config 250키<br/>
 <b>트래픽 지표(DAU·동시접속)는 회사 자산이라 기재하지 않았습니다.</b></sub>
 
 [`케이스 스터디 전문 →`](case-studies/adventurer.md)
@@ -165,7 +165,7 @@ ROLE      프론트엔드 단독 설계 · 운영
 
 ADV·Champ 이중 도메인 실시간 리포트. 민감 지표를 **숨기는 게 아니라 렌더링 자체를 차단**하는 이중 권한 설계.
 
-<sub>**기술** — Vue · Vuex · Highcharts · Socket.io · Bootstrap</sub> &nbsp;[`전문 →`](case-studies/dashboard.md)
+<sub>**기술**: Vue · Vuex · Highcharts · Socket.io · Bootstrap</sub> &nbsp;[`전문 →`](case-studies/dashboard.md)
 
 <br/>
 
@@ -173,7 +173,7 @@ ADV·Champ 이중 도메인 실시간 리포트. 민감 지표를 **숨기는 �
 
 Unity 웹보드 게임의 웹뷰 프론트엔드. **게임 클라이언트 배포 주기와 무관하게 콘텐츠만 갱신**할 수 있는 구조 확보.
 
-<sub>**기술** — HTML/CSS · JavaScript · Unity WebView · JS Bridge</sub> &nbsp;[`전문 →`](case-studies/champpoker.md)
+<sub>**기술**: HTML/CSS · JavaScript · Unity WebView · JS Bridge</sub> &nbsp;[`전문 →`](case-studies/champpoker.md)
 
 <br/>
 
@@ -181,7 +181,7 @@ Unity 웹보드 게임의 웹뷰 프론트엔드. **게임 클라이언트 배�
 
 Expo / React Native 크로스 플랫폼. EAS Build·OTA로 스토어 심사 없이 반영, **2개월 내 iOS·Android 동시 배포**.
 
-<sub>**기술** — Expo · React Native · Zustand · NativeWind · EAS</sub> &nbsp;[`전문 →`](case-studies/mobile-mvp.md)
+<sub>**기술**: Expo · React Native · Zustand · NativeWind · EAS</sub> &nbsp;[`전문 →`](case-studies/mobile-mvp.md)
 
 <br/>
 
@@ -199,7 +199,7 @@ Expo / React Native 크로스 플랫폼. EAS Build·OTA로 스토어 심사 없�
 
 <br/>
 
-### [Workforce — MSA 기반 통합 HRMS](case-studies/workforce.md) &nbsp;<sub>`팀 4인`</sub>
+### [Workforce - MSA 기반 통합 HRMS](case-studies/workforce.md) &nbsp;<sub>`팀 4인`</sub>
 
 근태·급여·결재·평가를 통합한 마이크로서비스 HRMS. **팀 프로젝트이므로 git 이력으로 확인한 실제 기여만 적습니다.**
 
@@ -208,20 +208,45 @@ MY SCOPE  목표·평가(OKR) 도메인 E2E · 실시간 채팅 · K8s 무중단
 NOT MINE  MSA 전체 설계 · AI 챗봇 · RBAC 권한 · 통합 검색 (타 팀원 담당)
 ```
 
-| 담당 | 실측 기여 |
+| 담당 | 내용 |
 |---|---|
-| OKR 도메인 E2E | `goal-service` — 변경 파일 **697** (2위 26) |
-| 실시간 채팅 | `memberchat` — 변경 파일 **108**, 커밋 13건 중 **12건** |
-| 무중단 배포 | 커밋 `6f1d02a` 한 건으로 7개 서비스에 RollingUpdate + HPA · PDB |
+| OKR 도메인 E2E | 목표 정렬·진척·평가를 도메인 설계부터 API·테스트까지 단독 |
+| 실시간 채팅 | STOMP + Redis Pub/Sub 으로 인스턴스 간 메시지 fan-out |
+| 무중단 배포 | 7개 서비스에 RollingUpdate(maxUnavailable 0) + HPA · PDB 신설 |
 
-<sub>**실측** — 3개 저장소 누적 1,461커밋 중 **325커밋**(BE 193 · FE 130 · DevOps 2)<br/>
-**기술** — Java · Spring Boot · Spring Cloud · Kafka · Redis · STOMP · Kubernetes · AWS EKS</sub>
+<sub>**기술**: Java · Spring Boot · Spring Cloud · Kafka · Redis · STOMP · Kubernetes · AWS EKS</sub>
 
 [`케이스 스터디 전문 →`](case-studies/workforce.md)
 
 <br/>
 
-### [짐꽁 — 피트니스 수업 예약·출석·결제 관리](case-studies/gymkkong.md) &nbsp;<sub>`팀 3인`</sub>
+### [Articket - 공연 예매 플랫폼](case-studies/articket.md) &nbsp;<sub>`팀 리드(PM)`</sub>
+
+실시간 좌석 선점·결제로 예매를 확정하는 공연 예매 플랫폼. 팀 리드로 일정·범위·역할 분담과 통합을 책임졌습니다.
+
+```text
+PROBLEM   선점과 결제 확정 사이에 좌석 상태가 흔들리면
+          중복 판매 또는 재고 잠김이 발생한다
+SOLUTION  선점을 제3의 상태로 두고 TTL 로 자동 만료 ·
+          결제 확정 시점에 선점 유효성을 재검증
+ROLE      팀 리드(PM) · 인증 인가 설계 · SSE 실시간 알림 · FE 아키텍처 설계
+```
+
+| 핵심 결정 | 내용 |
+|---|---|
+| 좌석 상태 3분 | "빈 좌석 / 팔린 좌석" 둘로는 **결제 중인 좌석**을 표현할 수 없다 |
+| TTL 자동 만료 | 선점을 Redis TTL 로 두어 별도 정리 배치 없이 재고 잠김 방지 |
+| 확정 시 재검증 | 선점이 만료된 뒤 결제가 성공하는 경합을 확정 시점 재확인으로 차단 |
+| SSE 선택 | 좌석 상태는 **서버 → 클라이언트 단방향** - 양방향이 필요 없으면 SSE 가 더 싸다 |
+
+<sub>**한계**: 경합 창을 좁혔을 뿐 제거하지 못했고, 동시성을 정량 검증하지 않았습니다.<br/>
+**기술**: Java · Spring Boot · Redis · JWT · OAuth2 · SSE · MariaDB · PortOne · KakaoMap</sub>
+
+[`케이스 스터디 전문 →`](case-studies/articket.md)
+
+<br/>
+
+### [짐꽁 - 피트니스 수업 예약·출석·결제 관리](case-studies/gymkkong.md) &nbsp;<sub>`팀 3인`</sub>
 
 회원·트레이너·관리자 세 역할이 하나의 앱에서 수업 예약·출석·결제를 처리하는 통합 관리 시스템.
 
@@ -230,28 +255,22 @@ PROBLEM   세 역할이 같은 자원을 다른 권한으로 만지고,
           인기 수업의 마지막 한 자리에서 동시 요청이 겹친다
 SOLUTION  인증 주체를 하나로 두고 권한 강제를 4층으로 분리 ·
           예약을 한 트랜잭션에서 락으로 직렬화 · 전 시나리오 E2E 재현 검증
-ROLE      백엔드 · 앱 · 데이터 모델 · 검증 체계 (커밋 73/100)
+ROLE      백엔드 · 앱 · 데이터 모델 · 검증 체계
 ```
 
 | 핵심 결정 | 내용 |
 |---|---|
-| 인증 주체 단일화 | `app_user` 하나가 인증을 책임지고 역할별 프로필을 분리 — JWT subject 고정 |
+| 인증 주체 단일화 | `app_user` 하나가 인증을 책임지고 역할별 프로필을 분리 - JWT subject 고정 |
 | 동시성 두 겹 | `SELECT … FOR UPDATE` + 유일키, **락 순서 고정**으로 교착 회피 |
 | 오류 번역 | DB 제약 위반을 500이 아니라 `ALREADY_RESERVED` 도메인 오류로 |
-| RBAC 4단 방어 | 화면은 편의일 뿐 — 실제 방어선은 API·서비스·DB에 있다고 문서에 명시 |
+| RBAC 4단 방어 | 화면은 편의일 뿐 - 실제 방어선은 API·서비스·DB에 있다고 문서에 명시 |
 
-<sub>**실측** — main 100커밋 중 **73커밋** · 엔드포인트 68 · 테이블 23 · **E2E 28/28 · 스모크 22/22** · 증적(스크린샷 46 · 녹화 58) · mermaid 34<br/>
-**기술** — Java · Spring Boot 3.4.1 · JPA · Spring Security · JWT · MariaDB · Expo/React Native · Playwright</sub>
+<sub>**실측**: 엔드포인트 68 · 엔티티 22 · 테이블 23 · **E2E 28/28 · 스모크 22/22** · 증적(스크린샷 46 · 녹화 58) · mermaid 34<br/>
+**기술**: Java · Spring Boot 3.4.1 · JPA · Spring Security · JWT · MariaDB · Expo/React Native · Playwright</sub>
 
 [`케이스 스터디 전문 →`](case-studies/gymkkong.md)
 
 <br/>
-
-### [Articket — 공연 예매 플랫폼](case-studies/articket.md) &nbsp;<sub>`팀 리드(PM)`</sub>
-
-실시간 좌석 선점·결제로 예매를 확정하는 플랫폼. 팀 리드로 일정·범위·역할 분담과 통합을 책임지며 인증·인가와 SSE 실시간 알림을 직접 구현.
-
-<sub>**기술** — Java · Spring Boot · Redis · JWT · OAuth2 · SSE · MariaDB</sub> &nbsp;[`전문 →`](case-studies/articket.md)
 
 ---
 
@@ -268,7 +287,7 @@ ROLE      백엔드 · 앱 · 데이터 모델 · 검증 체계 (커밋 73/100)
 
 | 설계 원칙 | 내용 |
 |---|---|
-| 쓰기 소유권 단일화 | 원장 쓰기는 Domain 단독. Agent·BFF는 금지 — 금전 데이터의 단일 진실 원천 고정 |
+| 쓰기 소유권 단일화 | 원장 쓰기는 Domain 단독. Agent·BFF는 금지 - 금전 데이터의 단일 진실 원천 고정 |
 | 멱등키 필수 | 모든 쓰기에 `Idempotency-Key`. 동일 키는 원장 무변경 + 저장된 결과 반환 |
 | 계약 우선 | OpenAPI로 스키마를 선정의한 뒤 구현 |
 
