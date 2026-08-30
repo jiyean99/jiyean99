@@ -7,7 +7,7 @@
 | 글 | 프로젝트 | 기간 |
 |:--|:--|:--|
 | [정확한 예측이 불가능하다는 걸 인정하는 데서 시작한 설계](shipping-visibility-design.md) | 국제운송 정시성 Visibility PoC | `2026.06 – 2026.12` |
-| [LLM 하나로는 안 됐다 — 7개 시나리오를 위한 프로바이더 추상화 계층](plyn-llm-provider-abstraction.md) | PLYN | `2026.06 – 2026.08` |
+| [벤더 하나에 묶이지 않기 위한 LLM 프로바이더 추상화](plyn-llm-provider-abstraction.md) | PLYN | `2026.06 – 2026.08` |
 
 ### 업무일지 시리즈 — 인증 · 큐 · 무결성
 

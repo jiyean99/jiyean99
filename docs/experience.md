@@ -42,7 +42,7 @@
 
 ![Python](../assets/tech/python.svg) ![FastAPI](../assets/tech/fastapi.svg) ![PostgreSQL](../assets/tech/postgresql.svg) ![Alembic](../assets/tech/alembic.svg) ![AWS Cognito](../assets/tech/aws-cognito.svg) ![Terraform](../assets/tech/terraform.svg) ![Docker](../assets/tech/docker.svg) ![React](../assets/tech/react.svg)
 
-> [개발기 → LLM 하나로는 안 됐다 — 7개 시나리오를 위한 프로바이더 추상화 계층](writing/plyn-llm-provider-abstraction.md)
+> [개발기 → 벤더 하나에 묶이지 않기 위한 LLM 프로바이더 추상화](writing/plyn-llm-provider-abstraction.md)
 
 ![](https://img.shields.io/badge/공급사_도메인-9종_End--to--End-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/설계_스펙-상태머신_5_·_도메인이벤트_10-2563EB?style=flat-square&labelColor=475569)
@@ -55,25 +55,29 @@
 
 ```mermaid
 flowchart LR
-  FE["React SPA"] -->|"OIDC 로그인"| API["api · FastAPI<br/>9개 도메인 라우터"]
+  FE["React SPA"] -->|"OIDC 로그인"| API["api · FastAPI<br/>라우터 6 · 엔드포인트 32"]
   Cognito["AWS Cognito"] -.->|"JWKS 검증"| API
   API -->|"SELECT … SKIP LOCKED"| DB[("PostgreSQL<br/>도메인 스키마 + 작업 큐")]
   DB --> W["worker<br/>파싱 · 분류 · 매칭"]
   API -.->|"비차단 폴백"| ML["ml · 추론"]
 ```
 
-**LLM 인텔리전스 흐름 — 시나리오 디스패치 → 멀티 프로바이더 → 구조화 응답**
+**LLM 인텔리전스 흐름 — 전략 디스패치 → 멀티 프로바이더 → 근거 병기 응답**
+
+<sub>이 구간은 제품 저장소(`plynai-v3`)가 아니라 품목 분류 R&D 저장소의 구현입니다.</sub>
 
 ```mermaid
 flowchart LR
-  Q["사용자 질의"] --> S{"scenario dispatch"}
-  S --> B["프롬프트 빌더 7종<br/>health · risk · negotiation …"]
-  B --> P["프로바이더 추상화 Protocol"]
-  P --> G["Gemini 2.5"]
-  P --> C["Claude Sonnet"]
-  P --> ST["Stub · 폴백"]
-  G --> R["구조화 응답<br/>markdown + JSON<br/>citations · actions"]
-  C --> R
+  Q["품목 분류 요청"] --> S{"PromptStrategyFactory"}
+  S --> B["프롬프트 전략 3종<br/>자재 · 원자재 · 설비"]
+  B --> P["LLMClientInterface"]
+  P --> C["Claude"]
+  P --> G["Gemini"]
+  P --> X["GPT"]
+  P -.->|"재시도 판정 · 폴백"| ST["Stub"]
+  C --> R["구조화 응답<br/>값 + 판단 근거 병기"]
+  G --> R
+  X --> R
   ST --> R
 ```
 
@@ -99,16 +103,6 @@ flowchart LR
   P5 -.->|"단가 모니터링 · 다음 회차"| U1
 ```
 
-**Supplier Health 트리아지 — 신호 → 우선순위 → 액션**
-
-```mermaid
-flowchart TB
-  IN["신호 수집<br/>KPI breach · score change<br/>risk event · compliance gap"] --> PRI["우선순위화<br/>severity × time-to-harm × business_impact"]
-  PRI --> CL["동일 공급사 다중 신호<br/>클러스터링"]
-  CL --> IMP["연관 엔티티 영향 분석<br/>Contract · PO · CAPA"]
-  IMP --> ACT["즉시 액션 제시"]
-```
-
 #### 상세 역할 및 성과
 
 **① 기획·설계 — 제품 정의**
@@ -117,25 +111,26 @@ flowchart TB
 - **PRD·소개 자료 작성** — AI-Native SRM PRD 및 대외 소개서 등 산출물 제작
 
 **② 플랫폼·아키텍처 — 모듈러 모놀리스 기반 구축**
-- **도메인 경계 강제 아키텍처** — api·worker·ml 3배포 단위 + 9개 도메인 패키지를 import-linter로 CI에서 경계 강제
+- **도메인 경계 강제 아키텍처** — api·worker·ml 3배포 단위 + 도메인 패키지 6종을 물리 스키마까지 분리하고, import-linter 계약 2건(도메인 간 상호 import 금지 · 공유 모듈의 상위 참조 금지)을 CI 게이트로 강제 — `lint-imports` 2 kept · 0 broken
 - **Cognito 기반 인증 전환** — 자체 인증 서버를 제거하고 BE는 JWKS 검증(Resource Server)만 담당하도록 재설계
 - **DB 기반 작업 큐 도입** — 비용 절감을 위해 Redis/ElastiCache를 걷어내고 PostgreSQL `SKIP LOCKED` 큐로 CPU 바운드 작업 격리
 - **인프라 통합·IaC** — 멀티 서비스 Docker compose 구성과 스키마 격리, Cognito 인증 인프라 Terraform 코드화, alembic 단일 마이그레이션 트리 운영
 
 **③ AI-Native SRM 도메인 구현 — 거래 전 프로세스 자동화**
-- **공급사 도메인 9종 구현** — 발굴·미팅노트·RFQ·온보딩·디렉터리·헬스·협상·조달리포트·인테이크를 REST 엔드포인트 32종으로 묶어 하나의 실행 시스템으로 구성
-- **공급사 발굴 AI 챗봇 워크플로우** — 챗봇 스캔으로 발굴 후보를 제시하고, 카드에서 본 후보가 상세까지 정합성 있게 이어지는 인터랙션 구현
+- **도메인 설계 9종 · Phase 1 구현 5종** — 발굴·미팅노트·RFQ·온보딩·디렉터리·헬스·협상·조달리포트·인테이크를 L2 도메인 문서로 선정의하고, Phase 1 에서 auth·spend·category·sourcing·savings 5종을 구현. HTTP 라우터를 가진 도메인은 4개이고 category 는 큐·포트를 경유합니다 — 라우터 6개 · REST 엔드포인트 32종(실측)
+- **공급사 발굴 화면 흐름** — 발굴 후보 카드에서 상세까지 정합성 있게 이어지는 인터랙션 구현. <sub>전시에서 시연한 발굴 AI 챗봇은 데모 산출물이며 제품 코드베이스에는 포함되지 않습니다.</sub>
 - **비정형 입력 정규화·자산화** — 이메일·문서·카탈로그·시험성적서·견적서 등 비정형 정보를 공급사 마스터 기준으로 정규화해 재사용 가능한 공급사 지식 그래프로 축적
 
-**④ LLM 인텔리전스 연동 — Gemini·Claude 멀티 프로바이더**
-- **프로바이더 추상화 계층 설계** — Gemini(`gemini-2.5-flash`)·Claude(Sonnet 계열)를 공통 Protocol 인터페이스 뒤로 추상화하고 dev/test용 Stub 클라이언트로 폴백, JSON Schema 기반 구조화 추출과 대화형 챗을 분리
-- **시나리오별 프롬프트 디스패치** — Supplier Health·Risk Center·Negotiation·Compare·Memory·Scorecards·AI-Manager 7개 시나리오를 `(system_prompt, messages)` 빌더로 매핑, 신규 시나리오는 매핑만 확장하는 구조로 설계
-- **근거 추적형 구조화 응답** — 모델이 마크다운 인사이트 본문 + 말미 JSON 블록(citations·assumptions·actions)을 규약된 순서로 반환하도록 강제하고, 서비스 레이어가 이를 파싱해 응답 스키마로 분리 → 답변마다 참조 근거·후속 액션을 추적 가능하게 구현
-- **Supplier Health 트리아지** — KPI breach·score change·risk event·compliance gap 신호를 심각도 × time-to-harm × business_impact로 우선순위화하고, 동일 공급사 다중 신호 클러스터링·연관 엔티티(Contract/PO/CAPA) 영향·즉시 액션까지 제시
-- **LLM 실패 비차단(graceful)** — 호출 타임아웃·SDK 재시도(max 2)·예외 계층·Stub 폴백으로 LLM 장애 시에도 파이프라인이 멈추지 않도록 처리
+**④ LLM 인텔리전스 — 품목 분류 R&D 라인**
+
+<sub>아래 구현은 제품 저장소(`plynai-v3`)가 아니라 품목 분류 R&D 저장소에 있습니다.</sub>
+- **프로바이더 추상화 계층 설계** — Claude·Gemini·GPT 3종을 `LLMClientInterface` 뒤로 추상화하고(`providers/{claude,gemini,gpt}_provider.py`) 재시도 판정을 클라이언트 레벨에 배치, 호출부가 프로바이더를 모르도록 분리
+- **프롬프트 전략 디스패치** — 자재·원자재·설비 3종 전략을 `ClassificationPromptStrategy` 추상 클래스 상속으로 구현하고 `PromptStrategyFactory` 가 품목 종류에 따라 디스패치, 신규 품목군은 전략 추가만으로 확장
+- **근거를 붙인 구조화 응답** — 값만 반환하지 않고 판단 근거를 함께 내려보내는 응답 형태를 계약으로 고정, 서비스 레이어가 이를 파싱해 응답 스키마로 분리
+- **LLM 실패 비차단(graceful)** — 호출 타임아웃·재시도 판정·예외 계층·Stub 폴백으로 LLM 장애 시에도 파이프라인이 멈추지 않도록 처리
 
 **⑤ QA·검증**
-- **상태 전이 정의·정합성 QA** — 발굴·RFQ·온보딩·협상 등 주요 흐름을 상태머신 명세로 정의하고, 챗봇 스캔 결과가 상세 화면까지 정합성 있게 이어지는지 시나리오 기반으로 검증·회귀 방지
+- **상태 전이 정의·정합성 QA** — sourcing·savings·rfq 의 상태 전이를 L2 도메인 문서에 명세하고 구현이 그 명세를 따르게 함, 화면 흐름은 시나리오 기반으로 검증해 회귀 방지
 - **LLM·도메인 테스트** — LLM 클라이언트(gemini·claude·chat) 단위 테스트 + 챗·발굴 통합 테스트로 회신 안정성 확보
 
 **⑥ 설계 의사결정 기록 — 업무일지 6편**
@@ -274,10 +269,14 @@ flowchart LR
 
 > [개발기 → 정확한 예측이 불가능하다는 걸 인정하는 데서 시작한 설계](writing/shipping-visibility-design.md)
 
-![](https://img.shields.io/badge/스냅샷_조인키_일치율-99.6%25-2563EB?style=flat-square&labelColor=475569)
+![](https://img.shields.io/badge/항만_키_조인_일치율-99.6%25-2563EB?style=flat-square&labelColor=475569)
+![](https://img.shields.io/badge/ETA2_구간누적-98.13%25-2563EB?style=flat-square&labelColor=475569)
+![](https://img.shields.io/badge/ETA3_모델산출-85.56%25-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/중복_재적재-0건-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/데이터_계층-raw·core·svc_분리-2563EB?style=flat-square&labelColor=475569)
 ![](https://img.shields.io/badge/프로토타입_시연-완료-2563EB?style=flat-square&labelColor=475569)
+
+<sub>99.6% 는 `port_radar` ↔ `port_radar_snapshot` **항만 키 한 쌍의 일치율**이고 전체 조인이 아닙니다. 원천 간 결합에는 한계가 있었습니다 — Global Tracking ↔ Port Radar 39%, House B/L·Invoice·Container 0% (고객사 확인 회신 2026-06). PoC 전체 기간은 2026.12까지이며, 위 기간은 제가 담당한 구간입니다.</sub>
 
 #### 아키텍처
 
@@ -318,7 +317,9 @@ sequenceDiagram
 
 **① 기획·설계 — 요구사항부터 화면 정의까지**
 - **요구사항 명세·데이터 정의서 작성** — 물류사 원천 시스템 export 항목을 업무 요건과 매핑해 수급 범위·주기·필수 컬럼을 확정, 데이터정의서·화면기능정의서(v1.3)·WBS 등 기획 산출물 제작
-- **리스크 판단 기준 설계** — 단일 스냅샷 데이터로는 정확한 ETA 예측이 불가함을 정직하게 스코핑, 핵심 산출을 위험 등급(진행·주의·회피) + 근거 한 줄로 재정의하고 평가 기준을 "회피 권고 묶음의 정밀도"로 확정
+- **ETA 산출 설계 — 두 트랙으로 분리** — 스냅샷 한 장으로 "정확한 도착시각 하나"를 약속할 수 없다고 판단해 산식을 둘로 나눔. **ETA2(구간 누적)** 는 기점 ATD 에 구간별 3개월 평균 리드타임을 쌓아 산출하고 구간별 근거를 함께 내며(88,754 / 90,444 = **98.13%**), **ETA3(모델 산출)** 는 화물 한 건을 통짜로 예측하고 지연 확률을 함께 냄(77,387 / 90,444 = **85.56%**). 화면에서 스위치로 전환
+- **못 낸 값의 사유 분리** — 빈칸을 `—` 하나로 뭉치지 않고 **서빙 뷰 없음 / 모델 입력 없음(`no_model_input`, 14.44%) / 트랙 미실행** 세 갈래로 구분해, 어디를 고쳐야 값이 느는지가 표에서 사라지지 않게 함. 받은 자료의 ETA 는 우리 산출값과 별개 열로 병기하고 덮어쓰지 않음
+- **위험 등급은 병행 축** — 진행·주의·회피 3단계를 trigger-count 로 산출해 경보 축으로 함께 운영. ETA 를 대체한 것이 아니라 병행하는 지표이며, 평가 기준은 "회피 권고 묶음의 정밀도"
 
 **② 데이터 아키텍처 — raw·core·svc 3계층 분리**
 - **계층 분리 설계** — 원본 불변 보존(raw) → 정규화·위험 산출(core) → 웹 표면(svc, 대부분 뷰)으로 스키마를 분리, 변화 추적은 파생 레이어가 전담하도록 구성
