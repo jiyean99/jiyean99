@@ -44,7 +44,7 @@
 ### <img align="absmiddle" src="https://www.google.com/s2/favicons?domain=zempublic.co.kr&sz=64" width="17" /> &nbsp;[(주)잼퍼블릭](https://zempublic.co.kr) &nbsp;`2023.03 – 2025.08`
 
 **Frontend Engineer & Project Lead** &nbsp;·&nbsp; 실시간 웹 서비스와 사내 시스템 프론트엔드를 단독 설계·운영<br/>
-<!-- <sub>기능 기획서·디자인 시안·퍼블리싱·개발·QA를 한 사람 안에서 연결. 모노레포 누적 6,441커밋 중 <b>926커밋</b> 기여 · 서비스 프론트 외 report-front · home · entr · admin-front · lib 동시 담당</sub> -->
+<!-- <sub>기능 기획서·디자인 시안·퍼블리싱·개발·QA를 한 사람 안에서 연결. 모노레포 누적 6,441커밋 중 <b>926커밋</b> 기여 · 서비스 프론트 외 저장소 5종 동시 담당</sub> -->
 
 - **승부사 온라인** — 대규모 실시간 스포츠 베팅 웹앱. 이중 WebSocket · MobX 29 스토어 · Remote Config &nbsp;[`상세`](docs/case-studies/adventurer.md) [`↗`](https://www.adventurer.co.kr/)
 - **사내 매출 통계 대시보드** — ADV·Champ 이중 도메인 실시간 리포트. Highcharts · 등급 접근 제어 &nbsp;[`상세`](docs/case-studies/dashboard.md)

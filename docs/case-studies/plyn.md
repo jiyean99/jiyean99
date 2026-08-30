@@ -17,7 +17,8 @@
 
 결과적으로 Phase 1에서 5개 도메인을 구현했고(설계는 9종), REST 엔드포인트 32종·도메인 테이블 26개·테스트 308개를 남겼습니다. 도메인 경계 위반은 `import-linter` 계약 2건이 커밋 전에 잡고, 물리 FK가 없다는 사실은 테스트가 단언합니다.
 
-<sub>모든 수치는 백업 스냅샷 `plynai-v3`(2026-08-20)를 직접 파싱해 확인한 값입니다.</sub>
+<sub>모든 수치는 제품 저장소 백업 스냅샷(2026-08-20)을 직접 파싱해 확인한 값입니다.
+제품 내부 구성·데이터 모델 상세는 전 직장 자산이므로 이 문서에서는 설계 판단 위주로 정리했습니다.</sub>
 
 ---
 
@@ -137,7 +138,7 @@ AI             LLM 프로바이더 추상화 (품목 분류 R&D 라인)
 
 | 수행 | 내용 | 산출물 |
 |---|---|---|
-| ✅ **도메인 리서치** | 구매(SRM) 업무 프로세스를 발굴·미팅노트·RFQ·온보딩·디렉터리·헬스·협상·조달리포트·인테이크 9개 도메인으로 분해 | L2 도메인 문서 6종 |
+| ✅ **도메인 리서치** | 구매(SRM) 업무 프로세스를 9개 도메인으로 분해하고 경계를 정의 | L2 도메인 문서 6종 |
 | ✅ **데이터 분석** | 고객사 지출 데이터 샘플의 컬럼 구조·품목명 표기 편차 프로파일링 | 파서 요구사항 (헤더 별칭·통화·날짜 6종) |
 | ✅ **분류 체계 검토** | 품목 분류를 자재·원자재·설비 3계열로 나눠야 하는 근거 확인 | 프롬프트 전략 3종 설계 |
 | ❌ 사용자 인터뷰 | 미수행 | — |
@@ -274,17 +275,20 @@ Metric           (Phase 1에서는 사용 지표를 수집하지 않았습니다
 
 3개월·1인이라는 제약에서 **9개 도메인을 전부 만드는 것은 불가능**했습니다. 그래서 "한 줄기를 관통시키는 것"을 기준으로 잘랐습니다.
 
-| 도메인 | Phase 1 | 판단 |
-|---|---|---|
-| `auth` | ✅ 구현 | 모든 것의 전제 |
-| `spend` | ✅ 구현 | 인테이크가 없으면 데이터가 안 들어옴 |
-| `category` | ✅ 구현 (워커·포트 경유) | 분류가 이 제품의 핵심 |
-| `sourcing` | ✅ 구현 | 공급사 매칭 — 가치의 종착점 |
-| `savings` | ✅ 구현 | 절감 발굴 |
-| `rfq` | 📄 설계·계약까지 | 선정 이후 단계라 후순위 |
-| `analytics` | 📄 설계·계약까지 | 데이터가 쌓인 뒤에 의미 |
-| `notification` | 📄 설계·계약까지 | 단일 사용자 검증 단계에선 불필요 |
-| `ml` | 🔧 룰 baseline stub | 모델은 R&D 라인 산출을 소비 |
+```text
+남긴 것 (구현 5)   인증 · 지출 인테이크 · 품목 분류 · 절감 발굴 · 공급사 매칭
+                   → 데이터가 들어와서 값이 되고 선택으로 이어지는 한 줄기
+
+자른 것 (설계 3)   선정 이후 단계 · 데이터 축적 후에 의미가 생기는 것 ·
+                   단일 사용자 검증 단계에서 불필요한 것
+                   → 설계와 계약까지만 하고 구현은 다음 Phase 로
+
+보류 (stub 1)      추론 계층 — 룰 baseline 만 두고 R&D 라인 산출을 소비하도록
+```
+
+**자르는 기준은 "중요도"가 아니라 "지금 없으면 줄기가 끊기는가"였습니다.** 알림이나 분석은 중요하지만 없어도 인테이크 → 분류 → 매칭이 돌아갑니다. 반대로 인테이크가 없으면 뒤가 전부 멈춥니다.
+
+> ⚠️ 각 도메인의 이름과 구현 상태는 전 직장 제품의 구성이므로 이 문서에서는 성격 수준으로만 적습니다.
 
 > ⚠️ **Success Metric / KPI는 설정하지 않았습니다.** Phase 1은 내부 검증 단계로 종료됐고, 사용률·Task Completion 등 제품 지표를 수집하는 단계까지 가지 않았습니다. 지어낸 수치를 적지 않습니다.
 
@@ -584,7 +588,6 @@ Options
 Decision  (C). FK를 전면 배제하고, 도메인 간 참조를 안정키(org_id · category_code)로만 한다.
           무결성은 두 겹으로 지킨다.
           ① test_no_db_foreign_keys 가 "FK가 없다"는 사실 자체를 단언한다
-             (tests/unit/auth/test_auth_models.py:43)
           ② 참조맵 16행을 코드 레지스트리 51관계(활성 48)로 전개하고,
              러너가 hard orphan / dangling reference를 탐지한다
 
@@ -609,7 +612,7 @@ Options
 
 Decision  (C). pyproject.toml에 계약 2건을 걸어 lint 단계에서 검사한다.
           · independence — 도메인 간 상호 import 금지 (auth · spend · category · sourcing)
-          · forbidden    — 공유 모듈(plyn_shared)이 app을 참조하지 못하게
+          · forbidden    — 공유 모듈이 상위(app) 계층을 참조하지 못하게
 
 Result    lint-imports 2 kept · 0 broken. 경계 위반이 커밋 전에 잡힌다.
 
@@ -619,28 +622,18 @@ Result    lint-imports 2 kept · 0 broken. 경계 위반이 커밋 전에 잡힌
 
 ---
 
-## 17. Domain Model / ERD
+## 17. Domain Model
 
-전체 26개 테이블 중 핵심 관계만 정리합니다.
-
-```mermaid
-erDiagram
-  ORGANIZATION ||--o{ MEMBER : "소속"
-  ORGANIZATION ||--o{ SPEND_BATCH : "업로드"
-  SPEND_BATCH  ||--o{ SPEND_LINE : "행"
-  SPEND_LINE   }o--o| CATEGORY_CODE : "분류(안정키)"
-  CLASSIFICATION_RUN ||--o{ SPEND_LINE : "분류 대상"
-  ORGANIZATION ||--o{ SUPPLIER : "발굴"
-  SPEND_LINE   }o--o{ SAVINGS_CANDIDATE : "절감 후보"
-  SUPPLIER     ||--o{ MATCH_RESULT : "매칭"
-```
+> ⚠️ **엔티티 관계도는 전 직장 제품의 데이터 모델이므로 이 문서에서 제외했습니다.**
+> 여기서는 그 모델을 만들 때 적용한 **설계 규칙**만 정리합니다.
 
 | 설계 규칙 | 내용 |
 |---|---|
-| **물리 FK 없음** | 위 관계는 논리 참조. 안정키(`org_id`, `category_code`)로만 연결 |
-| **스키마 물리 분리** | 도메인별 PostgreSQL 스키마 |
+| **물리 FK 없음** | 도메인 간 관계는 논리 참조. 안정키(조직 식별자 · 분류 코드)로만 연결 |
+| **스키마 물리 분리** | 도메인별 PostgreSQL 스키마 — 이후 서비스 추출을 위한 가역성 |
 | **원본 보존** | 파싱 전 원본을 `raw jsonb`로 통째 보관 → 파서 수정 후 재처리 가능 |
-| **마이그레이션** | Alembic 단일 트리 (리비전 21개) |
+| **마이그레이션** | Alembic 단일 트리 (리비전 21개) — 멀티 head 를 만들지 않음 |
+| **규모** | 도메인 테이블 26개 (실측) |
 
 ### 비동기 seam 게이트 — 참조 검증의 핵심 설계
 
@@ -648,9 +641,9 @@ erDiagram
 
 ```python
 Relation(
-    child="spend.spend_line.category_code",
-    parent="category.category_code.code",
-    status_col="classification_run.status",
+    child="<자식 도메인>.<테이블>.<컬럼>",
+    parent="<부모 도메인>.<테이블>.<컬럼>",
+    status_col="<비동기 실행 상태 컬럼>",
     confirmed_statuses=("done", "failed"),   # ← 확정 상태에서만 orphan 판정
 )
 ```
@@ -661,18 +654,15 @@ Relation(
 
 ## 18. API Design
 
-REST 엔드포인트 32종 중 흐름 이해에 필요한 것만 정리합니다.
+> ⚠️ **엔드포인트 목록은 전 직장 제품의 API 표면이므로 이 문서에서 제외했습니다.**
+> 실측 규모는 **HTTP 라우터 6개 · REST 엔드포인트 32종**이며, 여기서는 설계 원칙만 정리합니다.
 
-| Method | Endpoint | 설명 |
-|---|---|---|
-| `POST` | `/spend/batches` | 지출 파일 업로드 · 인테이크 배치 생성 |
-| `GET` | `/spend/batches/{id}` | 배치 상태 + `error_summary` |
-| `GET` | `/spend/lines` | 지출 라인 목록 (분류 상태 포함) |
-| `POST` | `/category/runs` | 분류 실행 요청 → 큐 등록 |
-| `GET` | `/category/runs/{id}` | 분류 진행 상태 |
-| `GET` | `/savings/candidates` | 절감 후보 + 근거 |
-| `GET` | `/sourcing/suppliers` | 공급사 후보 + 매칭 근거 |
-| `PATCH` | `/sourcing/suppliers/{id}` | **선정 확정 (사람이 수행)** |
+| 원칙 | 내용 |
+|---|---|
+| **비동기 작업은 즉시 응답** | 분류처럼 오래 걸리는 작업은 `202`로 받고 실행 상태를 별도 조회 |
+| **되돌리기 비용이 큰 액션은 사람이** | 매칭 점수는 시스템이 내지만 **최종 선정은 사용자가 확정** |
+| **값과 근거를 함께** | 아래 응답 계약 참조 |
+| **인증** | 모든 보호 엔드포인트가 Bearer 토큰 + 5가지 검증 통과 → 24절 |
 
 ### 응답 계약 — 값과 근거를 함께
 
@@ -680,10 +670,10 @@ Insight 1의 요구사항이 스키마로 고정된 부분입니다.
 
 ```jsonc
 {
-  "category_code": "MTL-STS-304",
+  "category_code": "<표준 분류 코드>",
   "confidence": 0.87,
   "rationale": {                  // ← 값만 주지 않는다
-    "matched_terms": ["SUS304", "스테인리스"],
+    "matched_terms": ["<매칭된 근거 용어>"],
     "strategy": "material",       // 어떤 프롬프트 전략이 판단했는지
     "source": "llm"               // 룰 baseline인지 모델인지
   }
@@ -784,21 +774,21 @@ PostgreSQL (도메인별 스키마)
 ### 패키지 구조와 경계
 
 ```text
-backend/
-├── app/
-│   ├── auth/          ← 라우터 O
-│   ├── spend/         ← 라우터 O
-│   ├── category/      ← 라우터 X (routers/에 .gitkeep만)
-│   ├── sourcing/      ← 라우터 O
-│   ├── savings/       ← 라우터 O
-│   └── queue/         ← backend.py (SKIP LOCKED · 백오프)
-└── shared/src/plyn_shared/
-    ├── auth/          ← dependencies.py · jwks.py
-    └── reconcile/     ← registry.py (51관계) · 정찰 러너
+app/
+├── 도메인 패키지 × 6      ← 각각 독립된 PostgreSQL 스키마 소유
+│   └── (라우터를 가진 도메인 4 · 큐·포트로만 동작하는 도메인 1)
+└── queue/                 ← SKIP LOCKED 클레임 · 지수 백오프
+
+shared/                    ← 하위 계층. app 을 참조하지 못한다 (CI 계약으로 강제)
+├── auth/                  ← JWKS 검증 · 의존성 주입
+└── reconcile/             ← 논리 참조 레지스트리(51관계) · 고아 참조 정찰 러너
 ```
 
+> 💡 **라우터가 없는 도메인의 디렉터리를 지우지 않고 남겼습니다.** 비어 있는 `routers/`가
+> "이 도메인은 HTTP로 진입하지 않는다"는 설계 의도를 저장소에서 바로 읽히게 합니다.
+
 **규칙 — 도메인 간 허용되는 통신은 두 가지뿐입니다.**
-① HTTP(포트 경유) ② 안정키로만 참조. 타 도메인 DB 직접 접근은 금지이며, 유일한 예외인 `plyn_shared`의 정찰 러너는 읽기 전용이고 그 예외성을 코드 주석에 명시했습니다.
+① HTTP(포트 경유) ② 안정키로만 참조. 타 도메인 DB 직접 접근은 금지이며, 유일한 예외인 공유 패키지의 정찰 러너는 읽기 전용이고 그 예외성을 코드 주석에 명시했습니다.
 
 ### 순수 상태 전이 — 테스트 가능한 도메인
 
@@ -865,7 +855,7 @@ DB나 시각에 의존하지 않는 순수 함수라 단위 테스트가 쉽고,
 
 ### LLM 프로바이더 추상화 (품목 분류 R&D 라인)
 
-> ⚠️ 이 구현은 제품 저장소(`plynai-v3`)가 아니라 **품목 분류 R&D 저장소**에 있습니다.
+> ⚠️ 이 구현은 제품 저장소가 아니라 **품목 분류 R&D 저장소**에 있습니다.
 
 ```text
 app/infrastructure/clients/
@@ -1011,7 +1001,7 @@ Result
 | 테스트 수 | **308개** / 49개 파일 |
 | 유형 | unit(순수 상태 전이) · integration(DB) |
 | 경계 검사 | `lint-imports` — **2 kept · 0 broken** |
-| 설계 단언 | `test_no_db_foreign_keys` (`tests/unit/auth/test_auth_models.py:43`) |
+| 설계 단언 | `test_no_db_foreign_keys` — FK 부재를 단언하는 테스트 |
 
 ### 이 프로젝트의 테스트 원칙 — "형식보다 무엇을 잡는가"
 
