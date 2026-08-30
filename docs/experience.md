@@ -221,6 +221,32 @@ NOT MINE  MSA 전체 설계 · AI 챗봇 · RBAC 권한 · 통합 검색 (타 �
 
 <br/>
 
+### [짐꽁 — 피트니스 수업 예약·출석·결제 관리](case-studies/gymkkong.md) &nbsp;<sub>`팀 3인`</sub>
+
+회원·트레이너·관리자 세 역할이 하나의 앱에서 수업 예약·출석·결제를 처리하는 통합 관리 시스템.
+
+```text
+PROBLEM   세 역할이 같은 자원을 다른 권한으로 만지고,
+          인기 수업의 마지막 한 자리에서 동시 요청이 겹친다
+SOLUTION  인증 주체를 하나로 두고 권한 강제를 4층으로 분리 ·
+          예약을 한 트랜잭션에서 락으로 직렬화 · 전 시나리오 E2E 재현 검증
+ROLE      백엔드 · 앱 · 데이터 모델 · 검증 체계 (커밋 73/100)
+```
+
+| 핵심 결정 | 내용 |
+|---|---|
+| 인증 주체 단일화 | `app_user` 하나가 인증을 책임지고 역할별 프로필을 분리 — JWT subject 고정 |
+| 동시성 두 겹 | `SELECT … FOR UPDATE` + 유일키, **락 순서 고정**으로 교착 회피 |
+| 오류 번역 | DB 제약 위반을 500이 아니라 `ALREADY_RESERVED` 도메인 오류로 |
+| RBAC 4단 방어 | 화면은 편의일 뿐 — 실제 방어선은 API·서비스·DB에 있다고 문서에 명시 |
+
+<sub>**실측** — main 100커밋 중 **73커밋** · 엔드포인트 68 · 테이블 23 · **E2E 28/28 · 스모크 22/22** · 증적(스크린샷 46 · 녹화 58) · mermaid 34<br/>
+**기술** — Java · Spring Boot 3.4.1 · JPA · Spring Security · JWT · MariaDB · Expo/React Native · Playwright</sub>
+
+[`케이스 스터디 전문 →`](case-studies/gymkkong.md)
+
+<br/>
+
 ### [Articket — 공연 예매 플랫폼](case-studies/articket.md) &nbsp;<sub>`팀 리드(PM)`</sub>
 
 실시간 좌석 선점·결제로 예매를 확정하는 플랫폼. 팀 리드로 일정·범위·역할 분담과 통합을 책임지며 인증·인가와 SSE 실시간 알림을 직접 구현.

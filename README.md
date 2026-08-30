@@ -64,6 +64,10 @@
   AI 챗봇·이벤트 기반 자동화로 근태·급여·결재·평가를 통합한 MSA 기반 HRMS.<br/>
   <sub>목표·평가(OKR) 도메인 End-to-End · 실시간 채팅(STOMP · Redis Pub/Sub fan-out) · K8s 무중단 배포 · AWS EKS 인프라 구성</sub>
 
+- **짐꽁 (GymKKong)** &nbsp;`2025.12 – 2026.08` &nbsp;[`상세`](docs/case-studies/gymkkong.md) [`저장소 ↗`](https://github.com/beyond-sw-camp/be23-1st-team1-GymKKong)<br/>
+  피트니스 센터의 수업 예약·출석·결제를 회원·트레이너·관리자 세 역할이 하나의 앱에서 처리하는 시스템.<br/>
+  <sub>동시성 제어(FOR UPDATE + 유일키 · 락 순서 고정) · RBAC 4단 방어 · E2E 28/28 · 스모크 22/22</sub>
+
 - **Articket** &nbsp;`2026.01 – 2026.03` &nbsp;[`상세`](docs/case-studies/articket.md) [`저장소 ↗`](https://github.com/beyond-sw-camp/be23-2nd-team5-articket-be)<br/>
   실시간 좌석 선점·결제로 예매를 확정하는 공연 예매 플랫폼.<br/>
   <sub>팀리드(PM) · 인증·인가(JWT · 소셜 OAuth2) · 실시간 알림(SSE · Redis Pub/Sub) · FE 아키텍처 설계 · PortOne · KakaoMap 연동</sub>
